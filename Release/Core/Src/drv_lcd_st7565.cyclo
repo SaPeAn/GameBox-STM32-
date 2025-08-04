@@ -1,0 +1,7 @@
+../Core/Src/drv_lcd_st7565.c:57:6:lcd_sendcommands	1
+../Core/Src/drv_lcd_st7565.c:64:6:lcd_bufupload	2
+../Core/Src/drv_lcd_st7565.c:76:6:lcd_bufwsmb8x5	1
+../Core/Src/drv_lcd_st7565.c:87:9:lcd_bufwstr8x5	4
+../Core/Src/drv_lcd_st7565.c:102:6:lcd_bufstrerase	1
+../Core/Src/drv_lcd_st7565.c:107:6:lcd_buferase	1
+../Core/Src/drv_lcd_st7565.c:27:6:lcd_init	2

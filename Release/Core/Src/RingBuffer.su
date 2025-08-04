@@ -1,0 +1,12 @@
+../Core/Src/RingBuffer.c:43:16:RingBuf_Clear	0	static
+../Core/Src/RingBuffer.c:28:16:RingBuf_Init	8	static
+../Core/Src/RingBuffer.c:56:16:RingBuf_Available	0	static
+../Core/Src/RingBuffer.c:72:16:RingBuf_BytePut	8	static
+../Core/Src/RingBuffer.c:98:16:RingBuf_DataPut	24	static
+../Core/Src/RingBuffer.c:86:16:RingBuf_CellPut	0	static
+../Core/Src/RingBuffer.c:183:16:RingBuf_ByteWatch	0	static
+../Core/Src/RingBuffer.c:133:16:RingBuf_ByteRead	8	static
+../Core/Src/RingBuffer.c:210:16:RingBuf_DataWatch	32	static
+../Core/Src/RingBuffer.c:162:16:RingBuf_DataRead	16	static
+../Core/Src/RingBuffer.c:150:16:RingBuf_CellRead	0	static
+../Core/Src/RingBuffer.c:197:16:RingBuf_CellWatch	0	static
