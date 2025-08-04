@@ -2,7 +2,6 @@
 #define	COMMON_H
 
 #include "main.h"
-
 #define     ENABLE     1
 #define     DISABLE    0    
     
@@ -36,15 +35,15 @@ typedef struct{
     unsigned coursorpos         :3;
 } tFlags;                               // System functions launch flags
 
-tFlags CFlags = {1, 0, 0, 0, 0, 1};
+extern tFlags CFlags;
 
-uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
-tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
-tRTC rtcraw;          // structure for system clock/date (uint8)
-uint8 Ubat;              // ADC data from battery level measurement
-uint8 batlvl;            // battery level for display (0...5)
-uint8 brightlvl;         // brightness level for display (0...7)
-uint8 brightPWM = 220;   // PWM duty cycle value for regulate display brightness
+extern uint32 timestamp;    // System timer (ms), starts counting from power on or last restart
+extern tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
+extern tRTC rtcraw;          // structure for system clock/date (uint8)
+extern uint8 Ubat;              // ADC data from battery level measurement
+extern uint8 batlvl;            // battery level for display (0...5)
+extern uint8 brightlvl;         // brightness level for display (0...7)
+extern uint8 brightPWM;   // PWM duty cycle value for regulate display brightness
 /*----------------------------------------------------------------------------*/
 
 typedef enum {
@@ -89,7 +88,7 @@ uint8 EEPROM_readbyte(uint8);
 
 /*---------------------BUTTONS & JOYSTICK VARIABLES---------------------------*/
 struct buttonstruct{
-	GPIO_TypeDef*    Port;
+  GPIO_TypeDef*    Port;
   uint16           Pin;
   const uint32*    timecounter;
   uint32           btnTimer;
@@ -113,21 +112,17 @@ typedef struct{
   uint8 oy;          //joystick y-axis position(0...255, center - ~130)
 }tJoystick;
 
-tButton B1;
-tButton B2;
-tButton B3;
-tButton B4;
-tJoystick joystick = {0};
+extern tButton B1;
+extern tButton B2;
+extern tButton B3;
+extern tButton B4;
+extern tJoystick joystick;
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
 tButton CreateBtn(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, const uint32* timecounter);
 void TestBtn(tButton*);
 void initbuttons(void);
-uint8 adc_getval_an0(void);
-uint8 adc_getval_an1(void);
-uint8 adc_getval_an2(void);
-void getjoypos(void);
 void checkjoydir(void);
 void check_btn_jstk(void);
 /*----------------------------------------------------------------------------*/

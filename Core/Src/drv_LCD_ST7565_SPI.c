@@ -66,6 +66,11 @@ void lcd_sendcommands(uint8_t* data, uint8_t N)
   DISP_INIT_SEND_DAT;
 }
 
+void LCD_writebyte(uint8 byte) {
+  dispbuffer[bufpg][bufcl] |= byte;
+  bufcl++;
+}
+
 void LCD_setpagecolumn(uint8 pg, uint8 cl) {
   bufpg = pg;
   bufcl = cl;

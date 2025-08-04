@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -28,6 +29,14 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef union{
+    uint16_t array[3];
+    struct{
+        uint16_t batlvl;
+        uint16_t jox;
+        uint16_t joy;
+    };
+}ADCdat_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -42,6 +51,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 RTC_HandleTypeDef hrtc;
 
@@ -50,11 +60,14 @@ SPI_HandleTypeDef hspi2;
 TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN PV */
+ADCdat_t ADC_data;
+uint8_t adc_complete_fl = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_TIM1_Init(void);
@@ -92,7 +105,12 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  commoninit();
+  randinit();
+  LCD_init();
+  LCD_bufupload_buferase();
+  initbuttons();
+  BrightPWMgen(brightPWM);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -104,6 +122,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_SPI2_Init();
   MX_TIM1_Init();
@@ -114,11 +133,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)ADC_data.array, 3);
 
 /*---------------------------------------------------------------------------------------------------------------------------------------*/
   while (1)
   {
+    MainMenu();
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 
   }
@@ -199,7 +221,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_LEFT;
   hadc1.Init.NbrOfConversion = 4;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -410,6 +432,22 @@ static void MX_TIM1_Init(void)
 }
 
 /**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -464,6 +502,24 @@ void HAL_IncTick(void)
   uwTick += uwTickFreq;
   timestamp++;
   SchedPeriodIncr();
+
+  static uint32_t timer_adc = 0;
+  if( ((timestamp - timer_adc) > 20) && adc_complete_fl )
+  {
+    timer_adc = timestamp;
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)ADC_data.array, 3);
+  }
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  if(hadc->Instance == ADC1)
+  {
+    joystick.ox = (uint8_t)ADC_data.jox/16;
+    joystick.oy = (uint8_t)ADC_data.joy/16;
+    Ubat = (uint8_t)ADC_data.batlvl/16;
+    adc_complete_fl = 1;
+  }
 }
 /* USER CODE END 4 */
 

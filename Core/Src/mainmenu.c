@@ -151,7 +151,6 @@ void testscreen(void)
     LCD_printweekday(rtcraw.weekday, 0, 115);
     
     batcheck();
-    getjoypos();
     LCD_printstr8x5((uint8*)"Бат. = ", 2, 2);
     u16_to_str(temp, Ubat, DISABLE);
     LCD_printstr8x5(temp, 2, 44);

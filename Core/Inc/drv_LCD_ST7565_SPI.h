@@ -9,7 +9,6 @@
 #ifndef DRV_LCDST7565_H
 #define	DRV_LCDST7565_H
 
-#include "common.h"
 #include "ufo_battle.h"
 
 uint8 SPI_transmit(uint8);    

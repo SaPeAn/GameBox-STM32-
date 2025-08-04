@@ -1,5 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/common.h \
- ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -28,9 +28,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/common.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- ../Core/Inc/drv_LCD_ST7565_SPI.h ../Core/Inc/common.h \
- ../Core/Inc/ufo_battle.h ../Core/Inc/scheduler.h ../Core/Inc/mainmenu.h
-../Core/Inc/common.h:
+ ../Core/Inc/common.h ../Core/Inc/main.h ../Core/Inc/drv_LCD_ST7565_SPI.h \
+ ../Core/Inc/ufo_battle.h ../Core/Inc/common.h ../Core/Inc/scheduler.h \
+ ../Core/Inc/mainmenu.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -61,8 +61,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/common.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-../Core/Inc/drv_LCD_ST7565_SPI.h:
 ../Core/Inc/common.h:
+../Core/Inc/main.h:
+../Core/Inc/drv_LCD_ST7565_SPI.h:
 ../Core/Inc/ufo_battle.h:
+../Core/Inc/common.h:
 ../Core/Inc/scheduler.h:
 ../Core/Inc/mainmenu.h:

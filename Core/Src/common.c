@@ -2,6 +2,21 @@
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
+/*----------------------------------GLOBVARS--------------------------------*/
+tFlags CFlags = {1, 0, 0, 0, 0, 1};
+tButton B1;
+tButton B2;
+tButton B3;
+tButton B4;
+tJoystick joystick = {0};
+
+uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
+tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
+tRTC rtcraw;          // structure for system clock/date (uint8)
+uint8 Ubat;              // ADC data from battery level measurement
+uint8 batlvl;            // battery level for display (0...5)
+uint8 brightlvl;         // brightness level for display (0...7)
+uint8 brightPWM = 220;   // PWM duty cycle value for regulate display brightness
 
 /*----------------------------------UTILITIES-------------------------------*/
 uint8 clamp(uint8 val, uint8 min, uint8 max)
@@ -81,8 +96,8 @@ void u16_to_str(uint8* str, uint16 num, uint8 N)
 
 void commoninit(void)
 {
-	HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, SET);
-	BrightPWMgen(220);
+  HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, SET);
+  BrightPWMgen(220);
   HAL_GPIO_WritePin(SOUND_OUT_GPIO_Port, SOUND_OUT_Pin, RESET);
   //brightPWM = EEPROM_readbyte(PWM_MEMADR);
 }
@@ -123,7 +138,6 @@ uint8 getbatlvl(uint8 Ub)
 
 void batcheck(void)
 {
-  Ubat = adc_getval_an2();
   batlvl = getbatlvl(Ubat);
   if(batlvl == 100) ShutDownLB();
 }
@@ -246,8 +260,6 @@ void check_btn_jstk(void) //Test buttons and joystick
   TestBtn(&B2);
   TestBtn(&B3);
   TestBtn(&B4);
-  joystick.ox = adc_getval_an0();
-  joystick.oy = adc_getval_an1();
   checkjoydir();
 }
 
@@ -279,30 +291,8 @@ void TestBtn(tButton* btn)
   }
 }
 
-uint8 adc_getval_an0()
-{
-  return 130;
-}
-
-uint8 adc_getval_an1()
-{
-  return 130;
-}
-
-uint8 adc_getval_an2()
-{
-  return 130;
-}
-
-void getjoypos(void)
-{
-  joystick.ox = adc_getval_an0();
-  joystick.oy = adc_getval_an1();
-}
-
 void checkjoydir(void)
 {
-    getjoypos();
     if(joystick.oy > 150 && joystick.joyFl == 0) {
         joystick.up = 1; 
         joystick.joyFl = 1;

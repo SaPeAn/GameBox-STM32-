@@ -1,6 +1,9 @@
 #include "scheduler.h"
 
 
+static uint8 SchedulerRegistredEvents = 0;
+tEvent SchedulerEvent[MAX_EVENT];
+
 uint8 SchedAddEvent(void (*func)(void), uint16 period)
 {
   SchedulerEvent[SchedulerRegistredEvents].callfunc = func;

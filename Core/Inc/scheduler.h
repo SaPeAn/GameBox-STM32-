@@ -8,7 +8,6 @@
 #define      ON           1
 #define      OFF          0
 
-static uint8 SchedulerRegistredEvents = 0;
 
 typedef struct {
   void     (*callfunc)(void);
@@ -17,7 +16,7 @@ typedef struct {
   uint8    run_flag;
 } tEvent;
 
-tEvent SchedulerEvent[MAX_EVENT];
+extern tEvent SchedulerEvent[MAX_EVENT];
 
 void  SchedPeriodIncr(void);
 uint8 SchedAddEvent(void (*)(void), uint16);
