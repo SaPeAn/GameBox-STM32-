@@ -1119,11 +1119,15 @@ void stateinit_exitmagazin(void)
 //--------------------------SYSTEM FUNCTIONS-------------------------------  
 void system_events_period25ms(void) 
 {
+  movesmallstar(SMALLSTAR_MOVE_PERIOD);
+  movminmagaz(MINMAGAZ_MOVE_PERIOD);
+}
+
+void system_events_period50ms(void)
+{
   //JOY_DIRECT_RESET;
   //IF_ANY_BTN_PRESS();
   check_btn_jstk();
-  movesmallstar(SMALLSTAR_MOVE_PERIOD);
-  movminmagaz(MINMAGAZ_MOVE_PERIOD);
 }
 
 void system_events_period100ms(void) 
@@ -1131,7 +1135,8 @@ void system_events_period100ms(void)
   batcheck();
   createsmallstar(SMALLSTAR_CREATE_PERIOD);
   drawsmallstar();  
-  
+
+  check_btn_jstk();
   screenupdate();
 }
 
@@ -1147,8 +1152,9 @@ void ufobattle(void)
 {
   randinit();
   SchedAddEvent(system_events_period25ms, 25);
-  SchedAddEvent(gamestatesprocess, 75);
+  SchedAddEvent(system_events_period50ms, 50);
   SchedAddEvent(system_events_period100ms, 100);
+  SchedAddEvent(gamestatesprocess, 75);
   gamestate = STATE_MAINMENU;
   gameevent = EVENT_NONE;
   coursorpos = COURS_POS_1;

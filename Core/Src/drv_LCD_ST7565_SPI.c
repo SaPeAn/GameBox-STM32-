@@ -21,8 +21,6 @@
 
 extern SPI_HandleTypeDef hspi2;
 
-#define  HW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
-
 uint8 dispbuffer[8][128] = {0};
 uint8 bufpg = 0;
 uint8 bufcl = 0;
@@ -147,8 +145,6 @@ void LCD_printmonth(uint8 mon, uint8 pg, uint8 cl) {
 }
 
 void LCD_printclockanddate(uint8 pg, uint8 cl) {
-  uint8 wday[3] = {0};
-  uint8 month[4] = {0};
   uint8 day[3] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '\0'};
   uint8 hours[3] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), '\0'};
   uint8 colon[4] = {0x00, 0x12, 0x00}; // ':' colon
@@ -240,7 +236,6 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       bufcl = 0;
       columns_max = (int16)Sprite->columns + (int16)startcolumn;
       if (columns_max < 0) columns_max = 0;
-      //m = (uint16)(-startcolumn) * Sprite->pages + ;
       column_shift = (uint8)(-startcolumn);
       
       line_shift = 8 - (uint8)-startline % 8;
@@ -323,14 +318,18 @@ void LCD_printgamestatbar(tGamer* gamer) {
   for (uint8 i = 9; i < (9 + gamer->health); i++) dispbuffer[0][i] |= 0b00111100; // helth bar
   for (uint8 i = 102; i < (102 + gamer->energy); i++) dispbuffer[0][i] |= 0b00111100; // energy bar
   dispbuffer[0][102 + gamer->energymax] |= 0b01111110;
-  uint8 money[5];
-  uint16 displaymoney = gamer->money;
-  if(displaymoney > 999) displaymoney = 999;
-  u16_to_str(money, displaymoney, 10);
-  uint8 bombs[2];
-  u16_to_str(bombs, gamer->bombs, 10);
+  uint8 money[6];
+  uint16 display_value = gamer->money;
+  if(display_value > 999) display_value = 999;
+  u16_to_str(money, display_value, 10);
+  uint8 bombs[6];
+  display_value = gamer->bombs;
+  if(display_value > 99) display_value = 99;
+  u16_to_str(bombs, display_value, 10);
   LCD_printstr8x5(money, 0, 50);
   LCD_printstr8x5(bombs, 0, 81);
+  //LCD_printstr8x5(money, 2, 10);
+  //LCD_printstr8x5(bombs, 3, 10);
 }
 /*----------------------------------------------------------------------------*/
 

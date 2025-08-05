@@ -81,16 +81,14 @@ void Error_Handler(void);
 #define DISP_SPI_SCK_GPIO_Port GPIOB
 #define DISP_SPI_MOSI_Pin GPIO_PIN_15
 #define DISP_SPI_MOSI_GPIO_Port GPIOB
-#define DISP_BRIGHT_PWM_Pin GPIO_PIN_8
-#define DISP_BRIGHT_PWM_GPIO_Port GPIOA
-#define BTN_1_Pin GPIO_PIN_4
-#define BTN_1_GPIO_Port GPIOB
-#define BTN_2_Pin GPIO_PIN_5
-#define BTN_2_GPIO_Port GPIOB
-#define BTN_3_Pin GPIO_PIN_6
+#define BTN_3_Pin GPIO_PIN_4
 #define BTN_3_GPIO_Port GPIOB
-#define BTN_4_Pin GPIO_PIN_7
+#define BTN_4_Pin GPIO_PIN_5
 #define BTN_4_GPIO_Port GPIOB
+#define BTN_1_Pin GPIO_PIN_6
+#define BTN_1_GPIO_Port GPIOB
+#define BTN_2_Pin GPIO_PIN_7
+#define BTN_2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

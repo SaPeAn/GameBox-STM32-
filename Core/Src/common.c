@@ -2,8 +2,9 @@
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
+
 /*----------------------------------GLOBVARS--------------------------------*/
-tFlags CFlags = {1, 0, 0, 0, 0, 1};
+tFlags CFlags = {1, 0, 0, 0, 0, 0};
 tButton B1;
 tButton B2;
 tButton B3;
@@ -97,8 +98,8 @@ void u16_to_str(uint8* str, uint16 num, uint8 N)
 void commoninit(void)
 {
   HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, SET);
-  BrightPWMgen(220);
   HAL_GPIO_WritePin(SOUND_OUT_GPIO_Port, SOUND_OUT_Pin, RESET);
+  BrightPWMgen(220);
   //brightPWM = EEPROM_readbyte(PWM_MEMADR);
 }
 
@@ -186,6 +187,7 @@ void BrightPWMgen(uint8 duty_cycle)
 {
 	uint16 dutyCycle = duty_cycle * 255;
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, dutyCycle);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 }
 
 void Sounds(uint16 delay)

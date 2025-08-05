@@ -4,12 +4,13 @@
 ../Core/Src/ufo_battle.c:993:6:magaz_buygasmask	0	static
 ../Core/Src/ufo_battle.c:1001:6:magaz_buyenergy	0	static
 ../Core/Src/ufo_battle.c:1011:6:magaz_buyhealth	0	static
-../Core/Src/ufo_battle.c:1138:6:gamestatesprocess	0	static
+../Core/Src/ufo_battle.c:1143:6:gamestatesprocess	0	static
 ../Core/Src/ufo_battle.c:191:6:createevilstar	16	static
 ../Core/Src/ufo_battle.c:618:6:statehandler_gameinitnew	24	static
 ../Core/Src/ufo_battle.c:659:6:statehandler_gameload	0	static
 ../Core/Src/ufo_battle.c:753:6:stateinit_gamestop	8	static
 ../Core/Src/ufo_battle.c:769:6:stateinit_gameexit	0	static
+../Core/Src/ufo_battle.c:1126:6:system_events_period50ms	0	static
 ../Core/Src/ufo_battle.c:570:6:gameprogress	16	static
 ../Core/Src/ufo_battle.c:271:6:movgamer.part.0	0	static
 ../Core/Src/ufo_battle.c:372:6:bomb_evilstar_collision.part.0	24	static
@@ -42,7 +43,7 @@
 ../Core/Src/ufo_battle.c:543:6:movesmallstar	4	static
 ../Core/Src/ufo_battle.c:1120:6:system_events_period25ms	8	static
 ../Core/Src/ufo_battle.c:559:6:drawsmallstar	16	static
-../Core/Src/ufo_battle.c:1129:6:system_events_period100ms	8	static
+../Core/Src/ufo_battle.c:1133:6:system_events_period100ms	8	static
 ../Core/Src/ufo_battle.c:781:6:menu_getevent	8	static
 ../Core/Src/ufo_battle.c:809:6:magaz_getevent	8	static
 ../Core/Src/ufo_battle.c:837:6:coursormovdisp	8	static
@@ -51,4 +52,4 @@
 ../Core/Src/ufo_battle.c:948:6:statehandler_menupause	8	static
 ../Core/Src/ufo_battle.c:967:6:statehandler_menusave	8	static
 ../Core/Src/ufo_battle.c:1022:6:statehandler_magazin	32	static
-../Core/Src/ufo_battle.c:1146:6:ufobattle	16	static
+../Core/Src/ufo_battle.c:1151:6:ufobattle	16	static
