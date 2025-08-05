@@ -115,23 +115,23 @@ void initbuttons(void)
 /*------------------------------SYSTEM FUNCTIONS------------------------------*/
 uint8 getbatlvl(uint8 Ub)
 {
-  uint8 lvl = (239 - Ub) / 8;
-  static uint8 Umax = 240;
-  static uint8 Umin = 228;
+  uint8 lvl = (240 - Ub) / 14;
+  static uint8 Umax = 241;
+  static uint8 Umin = 220;
   static uint8 reslvl = 0;
-  if(Ub <= 185) return 100; // bat to low, immediately shotdown code - 100
-  Ub = clamp(Ub, 192, 240);
+  if(Ub < 157) return 100; // bat to low, immediately shotdown code - 100
+  Ub = clamp(Ub, 157, 241);
   if((Ub <= Umax) && (Ub >= Umin)) return reslvl;
   else 
   {
     switch(lvl)
     {
-      case 0: Umin = 228; Umax = 240; reslvl = 0; break;
-      case 1: Umin = 220; Umax = 236; reslvl = 1; break;
-      case 2: Umin = 212; Umax = 228; reslvl = 2; break;
-      case 3: Umin = 204; Umax = 220; reslvl = 3; break;
-      case 4: Umin = 196; Umax = 212; reslvl = 4; break;
-      case 5: Umin = 192; Umax = 204; reslvl = 5; break;
+      case 0: Umin = 220; Umax = 241; reslvl = 0; break;
+      case 1: Umin = 206; Umax = 227; reslvl = 1; break;
+      case 2: Umin = 192; Umax = 213; reslvl = 2; break;
+      case 3: Umin = 178; Umax = 199; reslvl = 3; break;
+      case 4: Umin = 164; Umax = 185; reslvl = 4; break;
+      case 5: Umin = 157; Umax = 171; reslvl = 5; break;
     }
   }
   return reslvl;

@@ -141,7 +141,6 @@ int main(void)
   {
     MainMenu();
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /*---------------------------------------------------------------------------------------------------------------------------------------*/
@@ -232,7 +231,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -518,8 +517,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
   {
     joystick.ox = (uint8_t)(ADC_data.jox/16);
     joystick.oy = (uint8_t)(ADC_data.joy/16);
-    Ubat = 250;
-    //Ubat = (uint8_t)(90 + ADC_data.batlvl/16);
+    Ubat = (uint8_t)(ADC_data.batlvl/16);
     adc_complete_fl = 1;
   }
 }
