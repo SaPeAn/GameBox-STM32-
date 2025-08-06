@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-#define      MAX_EVENT    20
+#define      MAX_EVENT    30
 #define      ON           1
 #define      OFF          0
 

@@ -1,8 +1,8 @@
-../Core/Src/scheduler.c:7:7:SchedAddEvent	8	static
+../Core/Src/scheduler.c:7:7:SchedAddEvent	16	static
 ../Core/Src/scheduler.c:15:6:SchedRemoveAllEvents	0	static
 ../Core/Src/scheduler.c:20:6:SchedEventProcess	24	static
 ../Core/Src/scheduler.c:32:6:SchedPeriodIncr	0	static
 ../Core/Src/scheduler.c:40:7:SchedRemoveEvent	16	static
-../Core/Src/scheduler.c:55:7:SchedPauseEvent	0	static
-../Core/Src/scheduler.c:63:7:SchedResumeEvent	0	static
-../Core/Src/scheduler.c:72:7:SchedEventSetPeriod	0	static
+../Core/Src/scheduler.c:55:7:SchedPauseEvent	12	static
+../Core/Src/scheduler.c:63:7:SchedResumeEvent	12	static
+../Core/Src/scheduler.c:72:7:SchedEventSetPeriod	12	static

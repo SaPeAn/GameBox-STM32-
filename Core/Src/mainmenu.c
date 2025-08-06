@@ -46,7 +46,7 @@ void setdatetime(void)
     //uint8 temp[6];    
     //u16_to_str(temp, ((((rtcbcd.month & 0x10) >> 4) * 10) + (rtcbcd.month & 0x0F)), DISABLE);
     //uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
-    uint8 month[4] = {dig_to_smb(((rtcbcd.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
+    uint8 month[5] = {dig_to_smb((rtcbcd.month & 0x10) >> 4), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
     uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.year & 0xF0) >> 4), dig_to_smb(rtcbcd.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
@@ -64,44 +64,44 @@ void setdatetime(void)
       case 0: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 2); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.day--; if(rtcraw.day > 31) rtcraw.day = 31;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.day++; if(rtcraw.day > 31) rtcraw.day = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.day--; if(rtcraw.day > 31) rtcraw.day = 31; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.day++; if(rtcraw.day > 31) rtcraw.day = 0; HAL_Delay(200);}
       break;
       case 1: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 18);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.month--; if(rtcraw.month > 12) rtcraw.month = 12;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.month++; if(rtcraw.month > 12) rtcraw.month = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.month--; if(rtcraw.month > 12) rtcraw.month = 12; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.month++; if(rtcraw.month > 12) rtcraw.month = 0; HAL_Delay(200);}
       break;
       case 2: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(24, 8, 34); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year > 99) rtcraw.year = 99;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 99) rtcraw.year = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year > 99) rtcraw.year = 99; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 99) rtcraw.year = 0; HAL_Delay(200);}
       break;
       case 3: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 62);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.hour--; if(rtcraw.hour > 23) rtcraw.hour = 23;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.hour++; if(rtcraw.hour > 23) rtcraw.hour = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.hour--; if(rtcraw.hour > 23) rtcraw.hour = 23; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.hour++; if(rtcraw.hour > 23) rtcraw.hour = 0; HAL_Delay(200);}
       break;
       case 4: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 80); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.min--; if(rtcraw.min > 59) rtcraw.min = 59;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.min++; if(rtcraw.min > 59) rtcraw.min = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.min--; if(rtcraw.min > 59) rtcraw.min = 59; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.min++; if(rtcraw.min > 59) rtcraw.min = 0; HAL_Delay(200);}
       break;
       case 5: 
         LCD_erasestring(128, 1, 0);
         LCD_printhorline(12, 8, 98);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.sec--; if(rtcraw.sec > 59) rtcraw.sec = 59;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.sec++; if(rtcraw.sec > 59) rtcraw.sec = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.sec--; if(rtcraw.sec > 59) rtcraw.sec = 59; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.sec++; if(rtcraw.sec > 59) rtcraw.sec = 0; HAL_Delay(200);}
       break;
       case 6: 
         LCD_erasestring(128, 1, 0);
         LCD_printhorline(12, 8, 115);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.weekday--; if(rtcraw.weekday > 6) rtcraw.weekday = 6;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.weekday++; if(rtcraw.weekday > 6) rtcraw.weekday = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.weekday--; if(rtcraw.weekday > 6) rtcraw.weekday = 6; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.weekday++; if(rtcraw.weekday > 6) rtcraw.weekday = 0; HAL_Delay(200);}
       break;
     }
     

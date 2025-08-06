@@ -238,7 +238,7 @@ void rtcbcdtoraw(void)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------BUTTONS FUNCTIONS------------------------------*/
-#define  BTN_HOLD_ON_DELAY    75
+#define  BTN_HOLD_ON_DELAY    200
 #define  BTN_STUCK_ON_DELAY   2000
 
 tButton CreateBtn(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, const uint32* timecounter)
