@@ -141,6 +141,7 @@ int main(void)
   {
     MainMenu();
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /*---------------------------------------------------------------------------------------------------------------------------------------*/
@@ -269,14 +270,14 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+#if 0
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = {0};
   RTC_DateTypeDef DateToUpdate = {0};
 
   /* USER CODE BEGIN RTC_Init 1 */
-
+#endif
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC Only
@@ -290,7 +291,7 @@ static void MX_RTC_Init(void)
   }
 
   /* USER CODE BEGIN Check_RTC_BKUP */
-
+#if 0
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date
@@ -306,14 +307,14 @@ static void MX_RTC_Init(void)
   DateToUpdate.WeekDay = RTC_WEEKDAY_MONDAY;
   DateToUpdate.Month = RTC_MONTH_JANUARY;
   DateToUpdate.Date = 0x1;
-  DateToUpdate.Year = 0x0;
+  DateToUpdate.Year = 0x25;
 
   if (HAL_RTC_SetDate(&hrtc, &DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-
+#endif
   /* USER CODE END RTC_Init 2 */
 
 }

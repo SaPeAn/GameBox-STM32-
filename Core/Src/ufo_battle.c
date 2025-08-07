@@ -16,17 +16,17 @@
 
 //------------------------------Game const & vars-------------------------------
 
-#define EVILSTAR_MAX                    10
+#define EVILSTAR_MAX                    15
 #define EVILSTAR_DEATHANIMATION_PERIOD  2
 #define EVILSTAR_DAMAGE                 2
 
-#define BULLET_MAX                      18
+#define BULLET_MAX                      25
 #define BULLET_ENERGY_COST              2
 #define BULLET_DAMAGE                   2
 #define BULLET_GENERATE_PERIOD_MS       110
 #define BULLET_MOVE_PERIOD_MS           13
 
-#define BOMB_MAX                        4
+#define BOMB_MAX                        10
 #define BOMB_DAMAGE                     10
 #define BOMBSHARD_DAMAGE                5
 #define BOMB_ANIMATION_PERIOD_CALLS     4
@@ -34,11 +34,11 @@
 #define BOMB_MOVE_SPEED                 7
 #define BOMB_MONEY_COST                 5
 
-#define SMALLSTAR_MAX                   12
+#define SMALLSTAR_MAX                   20
 #define SMALLSTAR_MOVE_PERIOD_CALLS     2
 #define SMALLSTAR_CREATE_PERIOD_CALLS   5
 
-#define COIN_MAX                        10
+#define COIN_MAX                        15
 #define COIN_ANIMATION_PERIOD           10
 
 #define MAGAZIN_INTROANIMATION_PERIOD   16
@@ -599,6 +599,46 @@ void move_enemy_objects(void) {
  *                              GAME HANDLERS                            
  *******************************************************************************
  */
+void SchedGamerunEventsAdd(void)
+{
+  SchedAddEvent(createevilstar, PRD_EVILSTAR_CREATE);
+  SchedAddEvent(createbullet, BULLET_GENERATE_PERIOD_MS);
+  SchedAddEvent(createbomb, BOMB_GENERATE_PERIOD_MS);
+  SchedAddEvent(movbullet, BULLET_MOVE_PERIOD_MS);
+  SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
+  SchedAddEvent(gameprogress, 75);
+}
+
+void SchedGamerunEventsPause(void)
+{
+  SchedPauseEvent(createevilstar);
+  SchedPauseEvent(createbullet);
+  SchedPauseEvent(createbomb);
+  SchedPauseEvent(movbullet);
+  SchedPauseEvent(move_enemy_objects);
+  SchedPauseEvent(gameprogress);
+}
+
+void SchedGamerunEventsResume(void)
+{
+  SchedResumeEvent(createevilstar);
+  SchedResumeEvent(createbullet);
+  SchedResumeEvent(createbomb);
+  SchedResumeEvent(movbullet);
+  SchedResumeEvent(move_enemy_objects);
+  SchedResumeEvent(gameprogress);
+}
+
+void SchedGamerunEventsRemove(void)
+{
+  SchedRemoveEvent(createevilstar);
+  SchedRemoveEvent(createbullet);
+  SchedRemoveEvent(createbomb);
+  SchedRemoveEvent(movbullet);
+  SchedRemoveEvent(move_enemy_objects);
+  SchedRemoveEvent(gameprogress);
+}
+
 void statehandler_gameinitnew(void)
 {
   gamestate = STATE_STARTGAME;
@@ -631,12 +671,7 @@ void statehandler_gameinitnew(void)
     Game.level_progress = 200;
     GameFlags.gameflagsreg = 0b00001101;
     
-    SchedAddEvent(createevilstar, PRD_EVILSTAR_CREATE);
-    SchedAddEvent(createbullet, BULLET_GENERATE_PERIOD_MS);
-    SchedAddEvent(createbomb, BOMB_GENERATE_PERIOD_MS);
-    SchedAddEvent(movbullet, BULLET_MOVE_PERIOD_MS);
-    SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
-    SchedAddEvent(gameprogress, 75);
+    SchedGamerunEventsAdd();
     gameevent = EVENT_EXIT; 
   }
 }
@@ -648,26 +683,13 @@ void statehandler_gameload(void)
 
 void statehandler_gamerun(void)
 {
-  if(gamestate == STATE_PAUSEMENU)
-  {
-    SchedResumeEvent(createevilstar);
-    SchedResumeEvent(createbullet);
-    SchedResumeEvent(createbomb);
-    SchedResumeEvent(movbullet);
-    SchedResumeEvent(move_enemy_objects);
-    SchedResumeEvent(gameprogress);
-  }
+  if(gamestate == STATE_PAUSEMENU) SchedGamerunEventsResume();
   
   static uint8 deadgamerdrawcounter = GAMERDEATH_ANIMATION_PERIOD;
   
   gamestate = STATE_RUNGAME;
   if(GameFlags.WinTheGame){
-    SchedPauseEvent(createevilstar);
-    SchedPauseEvent(createbullet);
-    SchedPauseEvent(createbomb);
-    SchedPauseEvent(movbullet);
-    SchedPauseEvent(move_enemy_objects);
-    SchedPauseEvent(gameprogress);
+    SchedGamerunEventsPause();
     LCD_printstr8x5((uint8*)"онаедю!!!", 2, 35);
     //LCD_printsprite(48, 40, &gamer_sprite);
     IF_ANY_BTN_PRESS(
@@ -736,12 +758,7 @@ void statehandler_gamerun(void)
 
 void stateinit_gamestop(void)
 {
-  SchedRemoveEvent(createevilstar);
-  SchedRemoveEvent(createbullet);
-  SchedRemoveEvent(createbomb);
-  SchedRemoveEvent(movbullet);
-  SchedRemoveEvent(move_enemy_objects);
-  SchedRemoveEvent(gameprogress);
+  SchedGamerunEventsRemove();
   for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
@@ -933,15 +950,7 @@ void statehandler_menuload(void)
 
 void statehandler_menupause(void)
 {
-  if(gamestate == STATE_RUNGAME)
-  {
-    SchedPauseEvent(createevilstar);
-    SchedPauseEvent(createbullet);
-    SchedPauseEvent(createbomb);
-    SchedPauseEvent(movbullet);
-    SchedPauseEvent(move_enemy_objects);
-    SchedPauseEvent(gameprogress);
-  }
+  if(gamestate == STATE_RUNGAME) SchedGamerunEventsPause();
   gamestate = STATE_PAUSEMENU;
   
   menu_getevent();
@@ -1009,14 +1018,7 @@ void magaz_buyhealth(void)
 //-----------------------------MAGAZIN MENU HANDLER---------------------------
 void statehandler_magazin(void)
 {
-  if(gamestate == STATE_RUNGAME){
-    SchedPauseEvent(createevilstar);
-    SchedPauseEvent(createbullet);
-    SchedPauseEvent(createbomb);
-    SchedPauseEvent(movbullet);
-    SchedPauseEvent(move_enemy_objects);
-    SchedPauseEvent(gameprogress);
-  }
+  if(gamestate == STATE_RUNGAME) SchedGamerunEventsPause();
   gamestate = STATE_MAGAZIN; 
   if(gameevent == EVENT_ENTERMAGAZ) // entering magazin animation
   {
@@ -1098,12 +1100,7 @@ void stateinit_exitmagazin(void)
     counter = 0;
     gamestate = STATE_RUNGAME;
     gameevent = EVENT_NONE;
-    SchedResumeEvent(createevilstar);
-    SchedResumeEvent(createbullet);
-    SchedResumeEvent(createbomb);
-    SchedResumeEvent(movbullet);
-    SchedResumeEvent(move_enemy_objects);
-    SchedResumeEvent(gameprogress);
+    SchedGamerunEventsResume();
   }
   drawgamer();
   drawinfo();
