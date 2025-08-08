@@ -77,8 +77,8 @@ void ShutDownLB(void);
 void batcheck(void);
 void rtcbcdtoraw(void);
 void rtcrawtobcd(void);
-void RTCgetdata(uint8*);
-void RTCsenddata(uint8*);
+void RTCgetdata(tRTC*);
+void RTCsenddata(tRTC*);
 
 
 #define    PWM_MEMADR    0

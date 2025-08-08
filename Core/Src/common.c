@@ -2,7 +2,7 @@
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
-
+extern RTC_HandleTypeDef hrtc;
 /*----------------------------------GLOBVARS--------------------------------*/
 tFlags CFlags = {1, 0, 0, 0, 0, 0};
 tButton B1;
@@ -204,14 +204,34 @@ void Sounds(uint16 delay)
   }
 }
 
-void RTCgetdata(uint8* RTCarr)
+void RTCgetdata(tRTC* RTCdat)
 {
-
+  RTC_TimeTypeDef sTime = {0};
+  RTC_DateTypeDef sDate = {0};
+  HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+  HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
+  RTCdat->sec = sTime.Seconds;
+  RTCdat->min = sTime.Minutes;
+  RTCdat->hour = sTime.Hours;
+  RTCdat->day = sDate.Date;
+  RTCdat->month = sDate.Month;
+  RTCdat->weekday = sDate.WeekDay;
+  RTCdat->year = sDate.Year;
 }
 
-void RTCsenddata(uint8* RTCarr)
+void RTCsenddata(tRTC* RTCdat)
 {
-
+  RTC_TimeTypeDef sTime = {0};
+  RTC_DateTypeDef sDate = {0};
+  sTime.Seconds = RTCdat->sec;
+  sTime.Minutes = RTCdat->min;
+  sTime.Hours = RTCdat->hour;
+  sDate.Date = RTCdat->day;
+  sDate.Month = RTCdat->month;
+  sDate.WeekDay = RTCdat->weekday;
+  sDate.Year = RTCdat->year;
+  HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
+  HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
 }
 
 void rtcrawtobcd(void)

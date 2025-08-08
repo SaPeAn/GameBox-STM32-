@@ -8,7 +8,7 @@
 void setdatetime(void)
 {
   uint8 selectpos = 0;
-  RTCgetdata(rtcbcd.rtcdata);
+  RTCgetdata(&rtcbcd);
   rtcbcdtoraw();
   uint8 displaingSaveFlag = 0;
   uint8 displaingSaveLatch = 0;
@@ -20,7 +20,7 @@ void setdatetime(void)
     
     if(B2.BtnON){
       B2.BtnON = 0;
-      RTCsenddata(rtcbcd.rtcdata);
+      RTCsenddata(&rtcbcd);
       displaingSaveFlag = 1;
     }
     
@@ -131,7 +131,7 @@ void testscreen(void)
 {
   while(1)
   {
-    RTCgetdata(rtcbcd.rtcdata);
+    RTCgetdata(&rtcbcd);
     rtcbcdtoraw();    
     uint8 day[4] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '.', '\0'};
     uint8 temp[6];    
@@ -276,7 +276,7 @@ void MainMenu(void)
   batcheck();
   BrightPWMgen(brightPWM);
   getbrightlvl();
-  RTCgetdata(rtcbcd.rtcdata);
+  RTCgetdata(&rtcbcd);
   rtcbcdtoraw();
   
   LCD_printclockanddate(0, 26);
