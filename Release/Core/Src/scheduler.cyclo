@@ -1,0 +1,8 @@
+../Core/Src/scheduler.c:7:7:SchedAddEvent	1
+../Core/Src/scheduler.c:15:6:SchedRemoveAllEvents	1
+../Core/Src/scheduler.c:20:6:SchedEventProcess	3
+../Core/Src/scheduler.c:32:6:SchedPeriodIncr	3
+../Core/Src/scheduler.c:40:7:SchedRemoveEvent	5
+../Core/Src/scheduler.c:55:7:SchedPauseEvent	3
+../Core/Src/scheduler.c:63:7:SchedResumeEvent	3
+../Core/Src/scheduler.c:72:7:SchedEventSetPeriod	3

@@ -44,7 +44,7 @@ void LCD_init(void)
 	(0x20 | 0x6),     // V5 Voltage Regulator Internal Resistor Ratio Set 0:3.0; 1:3.5; 2:4; 3:4.5; 4:5.0(default); 5:5.5; 6:6; 7:6.4;
 	(0x28 | 0b111),   // Power Controller Set a=1 :  Booster circuit on; b=1 :  Voltage regulator circuit on; c=1 : Voltage follower circuit on; default: 000, must be 111
 	(0x81),           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - first byte (command id)
-	(0x20),           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - second byte (value)
+	(0x1F),           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - second byte (value)
 	(0x40 | 0),       // Display Start Line Set (0-63)
 	(0xB0 | 0),       // Page Address Set (0-7))
 	(0x10 | 0),       // Column Address Set - first byte (0-15)

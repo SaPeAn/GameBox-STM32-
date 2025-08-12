@@ -117,6 +117,8 @@ extern tButton B2;
 extern tButton B3;
 extern tButton B4;
 extern tJoystick joystick;
+extern uint16  BTN_HOLD_ON_DELAY;
+extern uint16  BTN_STUCK_ON_DELAY;
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/

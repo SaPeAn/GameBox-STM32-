@@ -16,7 +16,7 @@
 ../Core/Src/drv_LCD_ST7565_SPI.c:169:6:LCD_printbatlevel	0	static
 ../Core/Src/drv_LCD_ST7565_SPI.c:175:6:LCD_printmenucoursor	0	static
 ../Core/Src/drv_LCD_ST7565_SPI.c:180:6:LCD_printbutselhint	40	static
-../Core/Src/drv_LCD_ST7565_SPI.c:187:6:LCD_printvertline	48	static
+../Core/Src/drv_LCD_ST7565_SPI.c:187:6:LCD_printvertline	40	static
 ../Core/Src/drv_LCD_ST7565_SPI.c:205:6:LCD_printhorline	32	static
-../Core/Src/drv_LCD_ST7565_SPI.c:219:6:LCD_printsprite	88	static
+../Core/Src/drv_LCD_ST7565_SPI.c:219:6:LCD_printsprite	72	static
 ../Core/Src/drv_LCD_ST7565_SPI.c:316:6:LCD_printgamestatbar	32	static
