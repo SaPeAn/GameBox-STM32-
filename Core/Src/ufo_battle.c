@@ -23,7 +23,7 @@
 #define BULLET_MAX                      25
 #define BULLET_ENERGY_COST              2
 #define BULLET_DAMAGE                   2
-#define BULLET_GENERATE_PERIOD_MS       150
+#define BULLET_GENERATE_PERIOD_MS       130
 #define BULLET_MOVE_PERIOD_MS           13
 
 #define BOMB_MAX                        10
@@ -663,8 +663,8 @@ void statehandler_gameinitnew(void)
   else
   {
     Gamer.health = 24;
-    Gamer.energy = 24;
-    Gamer.energymax = 24;
+    Gamer.energy = 4;
+    Gamer.energymax = 4;
     Gamer.gasmask_health = 0;
     Gamer.bombs = 10;
     Gamer.money = 50;
@@ -674,10 +674,10 @@ void statehandler_gameinitnew(void)
     BTN_HOLD_ON_DELAY = 50;
     Game.level_progress = 0;
     GameFlags.gameflagsreg = 0b00001101;
-    PRD_EVILSTAR_CREATE = 600;
-    PRD_EVILSTAR_CREATE_PREV = 600;
-    PRD_ENEMY_MOVE = 16;
-    PRD_ENEMY_MOVE_PREV = 16;
+    PRD_EVILSTAR_CREATE = PRD_EVILSTAR_CREATE_INITVAL;
+    PRD_EVILSTAR_CREATE_PREV = PRD_EVILSTAR_CREATE_INITVAL;
+    PRD_ENEMY_MOVE = PRD_ENEMY_MOVE_INITVAL;
+    PRD_ENEMY_MOVE_PREV = PRD_ENEMY_MOVE_INITVAL;
     SchedGamerunEventsAdd();
     gameevent = EVENT_EXIT; 
   }
@@ -859,6 +859,24 @@ void coursormovdisp(void)
       joystick.up = 0;
       if(coursorpos != COURS_POS_1) coursorpos--; 
     }
+    switch(coursorpos)
+	{
+	  case COURS_POS_1:
+		LCD_printmenucoursor(2, 4);
+		break;
+	  case COURS_POS_2:
+		LCD_printmenucoursor(4, 4);
+		break;
+	  case COURS_POS_3:
+		LCD_printmenucoursor(6, 4);
+		break;
+	  case COURS_POS_4:
+		LCD_printmenucoursor(6, 4);
+		break;
+	  case COURS_POS_5:
+		LCD_printmenucoursor(6, 4);
+		break;
+	}
   }
   else
   {
@@ -871,31 +889,6 @@ void coursormovdisp(void)
       joystick.left = 0;
       if(coursorpos != COURS_POS_1) coursorpos--; 
     }
-  }
-  //display coursor
-  if(gamestate != STATE_MAGAZIN)
-  {
-    switch(coursorpos)
-    {
-      case COURS_POS_1:
-        LCD_printmenucoursor(2, 4);
-        break;
-      case COURS_POS_2:
-        LCD_printmenucoursor(4, 4);
-        break;
-      case COURS_POS_3:  
-        LCD_printmenucoursor(6, 4);
-        break;
-      case COURS_POS_4:  
-        LCD_printmenucoursor(6, 4);
-        break;
-      case COURS_POS_5:  
-        LCD_printmenucoursor(6, 4);
-        break;
-    }
-  }
-  else
-  {
     switch(coursorpos)
     {
       case COURS_POS_1:

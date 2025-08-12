@@ -142,8 +142,9 @@ int main(void)
   {
     MainMenu();
     /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+    //HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1);
+    //HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, Data);
+/* USER CODE BEGIN 3 */
   }
   /*---------------------------------------------------------------------------------------------------------------------------------------*/
   /* USER CODE END 3 */
