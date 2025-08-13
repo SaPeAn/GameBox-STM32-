@@ -144,14 +144,14 @@ void batcheck(void)
 }
         
 void ShutDownLB(void)
-{
+{/*
   LCD_bufupload_buferase();
   HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   LCD_printstr8x5((uint8*)"Низкий заряд батареи!", 1, 0);
   LCD_printstr8x5((uint8*)"Устройство", 3, 0);
   LCD_printstr8x5((uint8*)"сейчас выключится!", 5, 0);
   LCD_bufupload_buferase();
-  while(1);
+  while(1);*/
 }
 
 void ShutDown(void)
@@ -192,15 +192,15 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  uint32 j;
+  volatile uint32 j;
   for(uint16 i = 0; i < (15000/delay); i++)
   {  
   	HAL_GPIO_WritePin(SOUND_OUT_GPIO_Port, SOUND_OUT_Pin, SET);
     j = delay * 6;
-    while(j--);
+    while(--j);
     HAL_GPIO_WritePin(SOUND_OUT_GPIO_Port, SOUND_OUT_Pin, RESET);
     j = delay * 6;
-    while(j--);
+    while(--j);
   }
 }
 
