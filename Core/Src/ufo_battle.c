@@ -76,11 +76,14 @@ tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
 uint16  PRD_EVILSTAR_CREATE = PRD_EVILSTAR_CREATE_INITVAL;
-uint16  PRD_EVILSTAR_CREATE_PREV = PRD_EVILSTAR_CREATE_INITVAL;
 uint8   PRD_ENEMY_MOVE = PRD_ENEMY_MOVE_INITVAL;
-uint8   PRD_ENEMY_MOVE_PREV = PRD_ENEMY_MOVE_INITVAL;
 uint16  PRD_GAMER_ENERGYREGEN = 250;
 uint8   GAME_STORY_STRING_NUM = 0;
+
+uint16 TotalStars = 0;
+uint16 TotalCoins = 0;
+uint16 CoinReceived = 0;
+uint16 StarsKilled = 0;
 
 tGAMEPROCESFLAGS GameFlags;
 
@@ -201,6 +204,7 @@ void createevilstar(void) {
   for(int i = 0; i < EVILSTAR_MAX; i++) {
     if (!EvilStar[i].state) {
       EvilStar[i].state = 1;
+      TotalStars++;
       EvilStar[i].cl = 127;
       EvilStar[i].ln = (int8)getrand(40) + 8;
       return;
@@ -212,6 +216,7 @@ void createcoin(tEvilStar* Evil_Star) {
   for(int i = 0; i < COIN_MAX; i++) {
     if (!Coin[i].state) {
       Coin[i].state = 1;
+      TotalCoins++;
       Coin[i].cl = Evil_Star->cl;
       Coin[i].ln = Evil_Star->ln;
       Coin[i].animation_count = COIN_ANIMATION_PERIOD;
@@ -346,6 +351,7 @@ void bullet_evilstar_collision(void) {
               ((EvilStar[i].ln + 10) > Bullet[j].ln) && EvilStar[i].state == 1 &&
               Bullet[j].state) {
         EvilStar[i].state = 2;
+        StarsKilled++;
         Bullet[j].state = 0;
         Sounds(500);
       }
@@ -371,6 +377,7 @@ void bomb_evilstar_collision(void) {
         if (((EvilStar[i].cl + 30) >= Bomb[j].cl) && (EvilStar[i].cl <= (Bomb[j].cl + 50)) && (EvilStar[i].ln <= (Bomb[j].ln + 39)) &&
                 ((EvilStar[i].ln + 16) > Bomb[j].ln) && EvilStar[i].state == 1) {
           EvilStar[i].state = 2;
+          StarsKilled++;
           Sounds(500);
         }
       }
@@ -384,6 +391,7 @@ void gamer_evilstar_collision(void) {
             ((EvilStar[i].ln + 15) > Gamer.ln) && (EvilStar[i].ln < (Gamer.ln + 15)) &&
             (EvilStar[i].state == 1) && (Gamer.health > 0)) {
       EvilStar[i].state = 2;
+      StarsKilled++;
       if(Gamer.gasmask_health > 0){
         Gamer.health -= 2;
         Gamer.gasmask_health -= 2;
@@ -403,6 +411,7 @@ void gamer_coin_collision(void) {
             (Coin[i].state == 1) && (Gamer.health > 0)) {
       Coin[i].state = 0;
       Gamer.money += 1;
+      CoinReceived++;
       Sounds(300);
     }
   }
@@ -492,8 +501,17 @@ void drawbomb(uint16 period) {
           LCD_printsprite(Bomb[i].ln, Bomb[i].cl, &bombshards_sprite[2]);
           break;
       }
-      Bomb[i].state++;
-      if(Bomb[i].state > 4) Bomb[i].state = 0;
+      if(Bomb[i].animation_count > (period / 2)){
+  	    Bomb[i].animation_count--;
+    	return;
+      }
+      else {
+	    Bomb[i].state++;
+	    Bomb[i].animation_count = period;
+	    if(Bomb[i].state > 4) {
+	      Bomb[i].state = 0;
+	    }
+      }
     }
   }
 }
@@ -565,29 +583,18 @@ void gameprogress(void)
       counter = 0;
     }
 
-    if((Game.level_progress % 45 == 0) && counter == 0 && Game.level_progress){
-      MinMagaz.state = 1;
-      MinMagaz.cl = 127;
-      SchedPauseEvent(createevilstar);
-      SchedPauseEvent(gameprogress);
+    if((Game.level_progress % 35 == 0) && counter == 0 && Game.level_progress){
+	  PRD_EVILSTAR_CREATE -= 100;
+	  PRD_ENEMY_MOVE -= 1;
+	  if(PRD_EVILSTAR_CREATE < 500) GameFlags.WinTheGame = 1;
+	  else {
+		MinMagaz.state = 1;
+		MinMagaz.cl = 127;
+		SchedPauseEvent(createevilstar);
+		SchedPauseEvent(gameprogress);
+	  }
     }
 
-    if(Game.level_progress >= 50 && Game.level_progress < 100){
-      PRD_EVILSTAR_CREATE = 1200;
-      PRD_ENEMY_MOVE = 22;}
-    if(Game.level_progress >= 100 && Game.level_progress < 150){
-      PRD_EVILSTAR_CREATE = 1000;
-      PRD_ENEMY_MOVE = 20;}
-    if(Game.level_progress >= 150 && Game.level_progress < 200){
-      PRD_EVILSTAR_CREATE = 800;
-      PRD_ENEMY_MOVE = 18;}
-    if(Game.level_progress >= 200 && Game.level_progress < 255){
-      PRD_EVILSTAR_CREATE = 600;
-      PRD_ENEMY_MOVE = 16;
-    }
-    if(Game.level_progress == 255){
-      GameFlags.WinTheGame = 1;
-    }
 
     counter++;
   }
@@ -675,9 +682,7 @@ void statehandler_gameinitnew(void)
     Game.level_progress = 0;
     GameFlags.gameflagsreg = 0b00001101;
     PRD_EVILSTAR_CREATE = PRD_EVILSTAR_CREATE_INITVAL;
-    PRD_EVILSTAR_CREATE_PREV = PRD_EVILSTAR_CREATE_INITVAL;
     PRD_ENEMY_MOVE = PRD_ENEMY_MOVE_INITVAL;
-    PRD_ENEMY_MOVE_PREV = PRD_ENEMY_MOVE_INITVAL;
     SchedGamerunEventsAdd();
     gameevent = EVENT_EXIT; 
   }
@@ -690,6 +695,7 @@ void statehandler_gameload(void)
 
 void statehandler_gamerun(void)
 {
+  uint8 string[10];
   if(gamestate == STATE_PAUSEMENU) SchedGamerunEventsResume();
   
   static uint8 deadgamerdrawcounter = GAMERDEATH_ANIMATION_PERIOD;
@@ -697,12 +703,25 @@ void statehandler_gamerun(void)
   gamestate = STATE_RUNGAME;
   if(GameFlags.WinTheGame){
     SchedGamerunEventsPause();
+
     LCD_printstr8x5((uint8*)"онаедю!!!", 2, 35);
-    //LCD_printsprite(48, 40, &gamer_sprite);
-    IF_ANY_BTN_PRESS(
-      deadgamerdrawcounter = GAMERDEATH_ANIMATION_PERIOD;
-      gameevent = EVENT_EXIT;
-    )
+
+    u16_to_str(string, StarsKilled, 10);
+    LCD_printstr8x5((uint8*)"  сахрн гбегд:", 4, 5);
+    LCD_printstr8x5((uint8*)string, 4, 90);
+    u16_to_str(string, CoinReceived, 10);
+    LCD_printstr8x5((uint8*)"янапюмн лнмер:", 5, 5);
+    LCD_printstr8x5((uint8*)string, 5, 90);
+
+    static uint16 tempcounter = 0;
+    if(tempcounter++ > 50) {
+		IF_ANY_BTN_PRESS(
+		  deadgamerdrawcounter = GAMERDEATH_ANIMATION_PERIOD;
+		  gameevent = EVENT_EXIT;
+		  tempcounter = 0;
+		)
+    }
+    IF_ANY_BTN_PRESS();
   }
   else{
     if(Gamer.health > 0)
@@ -726,8 +745,13 @@ void statehandler_gamerun(void)
       }
       if(deadgamerdrawcounter == 0)
       {
-        LCD_printstr8x5((uint8*)"гбегдюмскяъ", 3, 30);
-        LCD_printstr8x5((uint8*)"мюялепрэ!", 4, 36);
+        LCD_printstr8x5((uint8*)"гбегдюмскяъ мюялепрэ!", 2, 2);
+        u16_to_str(string, StarsKilled, 10);
+		LCD_printstr8x5((uint8*)"  сахрн гбегд:", 4, 5);
+		LCD_printstr8x5((uint8*)string, 4, 90);
+		u16_to_str(string, CoinReceived, 10);
+		LCD_printstr8x5((uint8*)"янапюмн лнмер:", 5, 5);
+		LCD_printstr8x5((uint8*)string, 5, 90);
         IF_ANY_BTN_PRESS(
           deadgamerdrawcounter = GAMERDEATH_ANIMATION_PERIOD;
           gameevent = EVENT_EXIT;
@@ -735,16 +759,10 @@ void statehandler_gamerun(void)
       }
     }
   }
-  
-  if(PRD_EVILSTAR_CREATE != PRD_EVILSTAR_CREATE_PREV) {
-    SchedEventSetPeriod(createevilstar, PRD_EVILSTAR_CREATE);
-    PRD_EVILSTAR_CREATE_PREV = PRD_EVILSTAR_CREATE;
-  }if(PRD_ENEMY_MOVE != PRD_ENEMY_MOVE_PREV) {  
-    SchedEventSetPeriod(move_enemy_objects, PRD_ENEMY_MOVE);
-    PRD_ENEMY_MOVE_PREV = PRD_ENEMY_MOVE;
-  }
 
-    
+  SchedEventSetPeriod(createevilstar, PRD_EVILSTAR_CREATE);
+  SchedEventSetPeriod(move_enemy_objects, PRD_ENEMY_MOVE);
+  
   movgamer();
   movbomb();
   bullet_evilstar_collision();

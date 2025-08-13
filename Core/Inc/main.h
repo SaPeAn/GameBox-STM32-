@@ -69,8 +69,6 @@ void Error_Handler(void);
 #define DISP_RSE_GPIO_Port GPIOA
 #define JOYSTICK_BTN_Pin GPIO_PIN_3
 #define JOYSTICK_BTN_GPIO_Port GPIOA
-#define SOUND_OUT_Pin GPIO_PIN_4
-#define SOUND_OUT_GPIO_Port GPIOA
 #define JOYSTICK_OX_Pin GPIO_PIN_0
 #define JOYSTICK_OX_GPIO_Port GPIOB
 #define JOYSTICK_OY_Pin GPIO_PIN_1
@@ -81,6 +79,8 @@ void Error_Handler(void);
 #define DISP_SPI_SCK_GPIO_Port GPIOB
 #define DISP_SPI_MOSI_Pin GPIO_PIN_15
 #define DISP_SPI_MOSI_GPIO_Port GPIOB
+#define SOUND_OUT_Pin GPIO_PIN_12
+#define SOUND_OUT_GPIO_Port GPIOA
 #define BTN_3_Pin GPIO_PIN_4
 #define BTN_3_GPIO_Port GPIOB
 #define BTN_4_Pin GPIO_PIN_5

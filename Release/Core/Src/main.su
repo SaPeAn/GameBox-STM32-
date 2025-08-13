@@ -1,6 +1,6 @@
-../Core/Src/main.c:82:5:_write	12	static,ignoring_inline_asm
-../Core/Src/main.c:157:6:SystemClock_Config	88	static,ignoring_inline_asm
-../Core/Src/main.c:97:5:main	112	static,ignoring_inline_asm
-../Core/Src/main.c:507:6:HAL_IncTick	8	static
-../Core/Src/main.c:521:6:HAL_ADC_ConvCpltCallback	0	static
-../Core/Src/main.c:537:6:Error_Handler	0	static,ignoring_inline_asm
+../Core/Src/main.c:84:5:_write	12	static,ignoring_inline_asm
+../Core/Src/main.c:159:6:SystemClock_Config	88	static,ignoring_inline_asm
+../Core/Src/main.c:99:5:main	112	static,ignoring_inline_asm
+../Core/Src/main.c:547:6:HAL_IncTick	8	static
+../Core/Src/main.c:561:6:HAL_ADC_ConvCpltCallback	0	static
+../Core/Src/main.c:577:6:Error_Handler	0	static,ignoring_inline_asm
