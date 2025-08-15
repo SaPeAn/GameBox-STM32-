@@ -144,14 +144,14 @@ void batcheck(void)
 }
         
 void ShutDownLB(void)
-{/*
+{
   LCD_bufupload_buferase();
   HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   LCD_printstr8x5((uint8*)"Низкий заряд батареи!", 1, 0);
   LCD_printstr8x5((uint8*)"Устройство", 3, 0);
   LCD_printstr8x5((uint8*)"сейчас выключится!", 5, 0);
   LCD_bufupload_buferase();
-  while(1);*/
+  while(1);
 }
 
 void ShutDown(void)

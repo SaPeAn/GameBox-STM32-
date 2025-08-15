@@ -73,8 +73,8 @@ static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_RTC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -124,8 +124,8 @@ int main(void)
   MX_ADC1_Init();
   MX_SPI2_Init();
   MX_TIM1_Init();
-  MX_RTC_Init();
   MX_SPI1_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
   commoninit();
@@ -138,14 +138,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)ADC_data.array, 3);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)ADC_data.array, 3);
 
 /*---------------------------------------------------------------------------------------------------------------------------------------*/
   while (1)
   {
     MainMenu();
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /*---------------------------------------------------------------------------------------------------------------------------------------*/
@@ -274,14 +273,14 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-#if 0
+
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = {0};
   RTC_DateTypeDef DateToUpdate = {0};
 
   /* USER CODE BEGIN RTC_Init 1 */
-#endif
+
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC Only
@@ -295,7 +294,7 @@ static void MX_RTC_Init(void)
   }
 
   /* USER CODE BEGIN Check_RTC_BKUP */
-#if 0
+
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date
@@ -311,14 +310,14 @@ static void MX_RTC_Init(void)
   DateToUpdate.WeekDay = RTC_WEEKDAY_MONDAY;
   DateToUpdate.Month = RTC_MONTH_JANUARY;
   DateToUpdate.Date = 0x1;
-  DateToUpdate.Year = 0x25;
+  DateToUpdate.Year = 0x0;
 
   if (HAL_RTC_SetDate(&hrtc, &DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-#endif
+
   /* USER CODE END RTC_Init 2 */
 
 }

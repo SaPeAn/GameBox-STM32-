@@ -6,8 +6,8 @@
 ../Core/Src/common.c:98:6:commoninit	1
 ../Core/Src/common.c:106:6:initbuttons	1
 ../Core/Src/common.c:116:7:getbatlvl	10
-../Core/Src/common.c:140:6:batcheck	1
 ../Core/Src/common.c:146:6:ShutDownLB	1
+../Core/Src/common.c:140:6:batcheck	1
 ../Core/Src/common.c:157:6:ShutDown	1
 ../Core/Src/common.c:166:6:getbrightlvl	1
 ../Core/Src/common.c:171:6:decbright	2
