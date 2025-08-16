@@ -21,7 +21,7 @@ typedef union{
     uint8 day;     // BCD  0...              |x |x |DH|DH|DL|DL|DL|DL|
     uint8 weekday; // BCD  from SUN to SAT   |x |x |x |x |x |W |W |W |
     uint8 month;   // century bit & BCD      |C |x |x |MH|ML|ML|ML|ML|
-    uint8 year;    // BCD                    |YH|YH|YH|YH|YL|YL|YL|YL|
+    uint16 year;    // BCD                    |YH|YH|YH|YH|YL|YL|YL|YL|
   };
   uint8 rtcdata[7];
 }tRTC;
@@ -38,7 +38,7 @@ typedef struct{
 extern tFlags CFlags;
 
 extern uint32 timestamp;    // System timer (ms), starts counting from power on or last restart
-extern tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
+extern tRTC raw;          // structure for clock/date from RTC module (BCD format))
 extern tRTC rtcraw;          // structure for system clock/date (uint8)
 extern uint8 Ubat;              // ADC data from battery level measurement
 extern uint8 batlvl;            // battery level for display (0...5)
@@ -75,8 +75,8 @@ void Sounds(uint16);
 void ShutDown(void);
 void ShutDownLB(void);
 void batcheck(void);
-void rtcbcdtoraw(void);
-void rtcrawtobcd(void);
+//void rtcbcdtoraw(void);
+//void rtcrawtobcd(void);
 void RTCgetdata(tRTC*);
 void RTCsenddata(tRTC*);
 

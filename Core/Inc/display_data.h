@@ -507,7 +507,7 @@ static const uint8  but_sel_hint[8][128] =
 
 static const uint8  weekday[7][3] =
 {
-  "бя", "ом", "бр", "яп", "вр", "ор", "яа"
+  "ом", "бр", "яп", "вр", "ор", "яа", "бя"
 };
 
 static const uint8  month[12][4] =

@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include <stdio.h>
+#include <stdio.h>
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include "scheduler.h"
@@ -89,7 +89,6 @@ int _write(int file, char *ptr, int len)
 	}
 	return len;
 }
-
 /* USER CODE END 0 */
 
 /**
@@ -139,7 +138,6 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)ADC_data.array, 3);
-
 /*---------------------------------------------------------------------------------------------------------------------------------------*/
   while (1)
   {
@@ -273,20 +271,20 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+#if 0
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = {0};
   RTC_DateTypeDef DateToUpdate = {0};
 
   /* USER CODE BEGIN RTC_Init 1 */
-
+#endif
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC Only
   */
   hrtc.Instance = RTC;
-  hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+  hrtc.Init.AsynchPrediv = 32768;
   hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
   if (HAL_RTC_Init(&hrtc) != HAL_OK)
   {
@@ -294,7 +292,7 @@ static void MX_RTC_Init(void)
   }
 
   /* USER CODE BEGIN Check_RTC_BKUP */
-
+#if 0
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date
@@ -317,7 +315,7 @@ static void MX_RTC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-
+#endif
   /* USER CODE END RTC_Init 2 */
 
 }

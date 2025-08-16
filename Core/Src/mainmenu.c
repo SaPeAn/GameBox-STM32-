@@ -8,8 +8,7 @@
 void setdatetime(void)
 {
   uint8 selectpos = 0;
-  RTCgetdata(&rtcbcd);
-  rtcbcdtoraw();
+  RTCgetdata(&rtcraw);
   uint8 displaingSaveFlag = 0;
   uint8 displaingSaveLatch = 0;
   uint32 tim = 0;
@@ -20,7 +19,7 @@ void setdatetime(void)
     
     if(B2.BtnON){
       B2.BtnON = 0;
-      RTCsenddata(&rtcbcd);
+      RTCsenddata(&rtcraw);
       displaingSaveFlag = 1;
     }
     
@@ -41,24 +40,24 @@ void setdatetime(void)
       selectpos--;
       if(selectpos == 255) selectpos = 6;
     }
+
+
+    uint8 day[4] = {dig_to_smb(rtcraw.day/10), dig_to_smb(rtcraw.day%10), '.', '\0'};
+	uint8 month[4] = {dig_to_smb(rtcraw.month / 10), dig_to_smb(rtcraw.month % 10), '.', '\0'};
+	uint8 year[5] = {dig_to_smb(rtcraw.year / 1000), dig_to_smb((rtcraw.year%1000)/100), dig_to_smb((rtcraw.year % 100) / 10), dig_to_smb(rtcraw.year % 10), '\0'};
+	LCD_printstr8x5(day, 0, 2);
+	LCD_printstr8x5(month, 0, 18);
+	LCD_printstr8x5(year, 0, 34);
+	uint8 hour[4] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), ':', '\0'};
+	uint8 min[4] = {dig_to_smb(rtcraw.min / 10), dig_to_smb(rtcraw.min % 10), ':', '\0'};
+	uint8 sec[3] = {dig_to_smb(rtcraw.sec / 10), dig_to_smb(rtcraw.sec % 10), '\0'};
+	LCD_printstr8x5(hour, 0, 62);
+	LCD_printstr8x5(min, 0, 80);
+	LCD_printstr8x5(sec, 0, 98);
+	LCD_printweekday(rtcraw.weekday, 0, 115);
+
         
-    uint8 day[4] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '.', '\0'};
-    //uint8 temp[6];    
-    //u16_to_str(temp, ((((rtcbcd.month & 0x10) >> 4) * 10) + (rtcbcd.month & 0x0F)), DISABLE);
-    //uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
-    uint8 month[5] = {dig_to_smb((rtcbcd.month & 0x10) >> 4), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
-    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.year & 0xF0) >> 4), dig_to_smb(rtcbcd.year & 0x0F), '\0'};
-    LCD_printstr8x5(day, 0, 2);
-    LCD_printstr8x5(month, 0, 18);
-    LCD_printstr8x5(year, 0, 34);
-    uint8 hour[4] = {dig_to_smb((rtcbcd.hour & 0x30) >> 4), dig_to_smb(rtcbcd.hour & 0x0F), ':', '\0'};
-    uint8 min[4] = {dig_to_smb((rtcbcd.min & 0x70) >> 4), dig_to_smb(rtcbcd.min & 0x0F), ':', '\0'};
-    uint8 sec[3] = {dig_to_smb((rtcbcd.sec & 0x70) >> 4), dig_to_smb(rtcbcd.sec & 0x0F), '\0'};
-    LCD_printstr8x5(hour, 0, 62);
-    LCD_printstr8x5(min, 0, 80);
-    LCD_printstr8x5(sec, 0, 98);
-    LCD_printweekday(rtcraw.weekday, 0, 115);
-    
+
     switch(selectpos)
     {
       case 0: 
@@ -76,8 +75,8 @@ void setdatetime(void)
       case 2: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(24, 8, 34); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year > 99) rtcraw.year = 99; HAL_Delay(200);}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 99) rtcraw.year = 0; HAL_Delay(200);}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year < 1970) rtcraw.year = 1970; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 2038) rtcraw.year = 2038; HAL_Delay(200);}
       break;
       case 3: 
         LCD_erasestring(128, 1, 0); 
@@ -122,7 +121,6 @@ void setdatetime(void)
       displaingSaveLatch = 0;
     }
     
-    rtcrawtobcd();
     LCD_bufupload_buferase();
   }
 }
@@ -131,25 +129,23 @@ void testscreen(void)
 {
   while(1)
   {
-    RTCgetdata(&rtcbcd);
-    rtcbcdtoraw();    
-    uint8 day[4] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '.', '\0'};
-    uint8 temp[6];    
-    //u16_to_str(temp, ((((rtcbcd.month & 0x10) >> 4) * 10) + (rtcbcd.month & 0x0F)), DISABLE);
-    //uint8 month[4] = {temp[3], temp[4], '.', '\0'};
-    uint8 month[4] = {dig_to_smb(((rtcbcd.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
-    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.year & 0xF0) >> 4), dig_to_smb(rtcbcd.year & 0x0F), '\0'};
+    RTCgetdata(&rtcraw);
+    uint8 day[4] = {dig_to_smb(rtcraw.day/10), dig_to_smb(rtcraw.day%10), '.', '\0'};
+    uint8 month[4] = {dig_to_smb(rtcraw.month / 10), dig_to_smb(rtcraw.month % 10), '.', '\0'};
+    uint8 year[5] = {dig_to_smb(rtcraw.year / 1000), dig_to_smb((rtcraw.year%1000)/100), dig_to_smb((rtcraw.year % 100) / 10), dig_to_smb(rtcraw.year % 10), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
     LCD_printstr8x5(year, 0, 34);
-    uint8 hour[4] = {dig_to_smb((rtcbcd.hour & 0x30) >> 4), dig_to_smb(rtcbcd.hour & 0x0F), ':', '\0'};
-    uint8 min[4] = {dig_to_smb((rtcbcd.min & 0x70) >> 4), dig_to_smb(rtcbcd.min & 0x0F), ':', '\0'};
-    uint8 sec[3] = {dig_to_smb((rtcbcd.sec & 0x70) >> 4), dig_to_smb(rtcbcd.sec & 0x0F), '\0'};
+    uint8 hour[4] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), ':', '\0'};
+    uint8 min[4] = {dig_to_smb(rtcraw.min / 10), dig_to_smb(rtcraw.min % 10), ':', '\0'};
+    uint8 sec[3] = {dig_to_smb(rtcraw.sec / 10), dig_to_smb(rtcraw.sec % 10), '\0'};
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
     LCD_printweekday(rtcraw.weekday, 0, 115);
     
+
+    uint8 temp[6];
     batcheck();
     LCD_printstr8x5((uint8*)"Бат. = ", 2, 2);
     u16_to_str(temp, Ubat, DISABLE);
@@ -276,8 +272,7 @@ void MainMenu(void)
   batcheck();
   BrightPWMgen(brightPWM);
   getbrightlvl();
-  RTCgetdata(&rtcbcd);
-  rtcbcdtoraw();
+  RTCgetdata(&rtcraw);
   
   LCD_printclockanddate(0, 26);
   LCD_printbatlevel(batlvl, 0, 105);

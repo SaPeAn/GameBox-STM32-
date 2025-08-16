@@ -145,8 +145,8 @@ void LCD_printmonth(uint8 mon, uint8 pg, uint8 cl) {
 }
 
 void LCD_printclockanddate(uint8 pg, uint8 cl) {
-  uint8 day[3] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '\0'};
-  uint8 hours[3] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), '\0'};
+  uint8 day[3] = {dig_to_smb(rtcraw.day/10), dig_to_smb(rtcraw.day%10), '\0'};
+  uint8 hours[3] = {dig_to_smb(rtcraw.hour/10), dig_to_smb(rtcraw.hour%10), '\0'};
   uint8 colon[4] = {0x00, 0x12, 0x00}; // ':' colon
   uint8 minutes[3] = {dig_to_smb(rtcraw.min / 10), dig_to_smb(rtcraw.min % 10), '\0'};
   LCD_printstr8x5(day, pg, cl);

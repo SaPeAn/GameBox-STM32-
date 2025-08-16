@@ -2,6 +2,9 @@
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
+
+#define SEC_A_DAY 86400
+
 extern RTC_HandleTypeDef hrtc;
 /*----------------------------------GLOBVARS--------------------------------*/
 tFlags CFlags = {1, 0, 0, 0, 0, 0};
@@ -12,7 +15,7 @@ tButton B4;
 tJoystick joystick = {0};
 
 uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
-tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
+//tRTC rtcbcd;          // structure for clock/date from RTC module (BCD format))
 tRTC rtcraw;          // structure for system clock/date (uint8)
 uint8 Ubat;              // ADC data from battery level measurement
 uint8 batlvl;            // battery level for display (0...5)
@@ -204,36 +207,79 @@ void Sounds(uint16 delay)
   }
 }
 
+void RTC_SetCounter_(uint32_t count)                                                    //«аписать новое значение счетчика
+{
+  RCC->APB1ENR |= RCC_APB1ENR_PWREN | RCC_APB1ENR_BKPEN;            //включить тактирование PWR и Backup
+  PWR->CR |= PWR_CR_DBP;                                            //разрешить доступ к Backup области
+  while (!(RTC->CRL & RTC_CRL_RTOFF));                              //проверить закончены ли изменени€ регистров RTC
+  RTC->CRL |= RTC_CRL_CNF;                                          //–азрешить «апись в регистры RTC
+  RTC->CNTH = count>>16;                                                              //записать новое значение счетного регистра
+  RTC->CNTL = count;
+  RTC->CRL &= ~RTC_CRL_CNF;                                                       //«апретить запись в регистры RTC
+  while (!(RTC->CRL & RTC_CRL_RTOFF));                                         //ƒождатьс€ окончани€ записи
+  PWR->CR &= ~PWR_CR_DBP;                                                         //запретить доступ к Backup области
+}
+
+uint32 RTC_GetCounter_(void)                                                             //ѕолучить значение счетчика
+{
+          return  (uint32)((RTC->CNTH << 16) | RTC->CNTL);
+}
+
+void timer_to_cal (uint32 timer, tRTC* RTCdat)
+{
+	uint32 a;
+	uint8 b;
+	uint8 c;
+	uint8 d;
+	uint32 time;
+
+	time = timer % SEC_A_DAY;
+	a = ((timer+43200)/(86400>>1)) + (2440587<<1) + 1;
+	a >>= 1;
+	RTCdat->weekday = a%7;
+	a += 32044;
+	b = (4 * a + 3) / 146097;
+	a = a - (146097 * b) / 4;
+	c = (4 * a + 3) / 1461;
+	a = a - (1461 * c) / 4;
+	d = (5 * a + 2) / 153;
+	RTCdat->day = a - (153 * d + 2) / 5 + 1;
+	RTCdat->month = d + 3 - 12 * (d / 10);
+	RTCdat->year = 100 * b + c - 4800 + (d / 10);
+	RTCdat->hour = time / 3600;
+	RTCdat->min = (time % 3600) / 60;
+	RTCdat->sec = (time % 3600) % 60;
+}
+
+uint32 cal_to_timer (tRTC* RTCdat)
+{
+	uint32 a;
+	int32 y;
+	uint32 m;
+	uint32 Uday;
+	uint32 time;
+
+	a = ((14 - RTCdat->month) / 12);
+	y = RTCdat->year + 4800 - a;
+	m = RTCdat->month + (12 * a) - 3;
+	Uday = (RTCdat->day + ((153 * m + 2) / 5) + 365 * y + (y / 4) - (y / 100) + (y / 400) - 32045) - 2440588;
+	time = Uday * 86400;
+	time += RTCdat->sec + RTCdat->min * 60 + RTCdat->hour * 3600;
+	return time;
+}
+
+
 void RTCgetdata(tRTC* RTCdat)
 {
-  RTC_TimeTypeDef sTime = {0};
-  RTC_DateTypeDef sDate = {0};
-  HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
-  HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
-  RTCdat->sec = sTime.Seconds;
-  RTCdat->min = sTime.Minutes;
-  RTCdat->hour = sTime.Hours;
-  RTCdat->day = sDate.Date;
-  RTCdat->month = sDate.Month;
-  RTCdat->weekday = sDate.WeekDay;
-  RTCdat->year = sDate.Year;
+	timer_to_cal (RTC_GetCounter_(), RTCdat);
 }
 
 void RTCsenddata(tRTC* RTCdat)
 {
-  RTC_TimeTypeDef sTime = {0};
-  RTC_DateTypeDef sDate = {0};
-  sTime.Seconds = RTCdat->sec;
-  sTime.Minutes = RTCdat->min;
-  sTime.Hours = RTCdat->hour;
-  sDate.Date = RTCdat->day;
-  sDate.Month = RTCdat->month;
-  sDate.WeekDay = RTCdat->weekday;
-  sDate.Year = RTCdat->year;
-  HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
-  HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+	RTC_SetCounter_(cal_to_timer(RTCdat));
 }
 
+/*
 void rtcrawtobcd(void)
 {
   rtcbcd.year = (uint8)((rtcraw.year / 10) << 4) | (rtcraw.year % 10);
@@ -254,7 +300,7 @@ void rtcbcdtoraw(void)
   rtcraw.hour = ((rtcbcd.hour & 0x3F) >> 4) * 10 + (rtcbcd.hour & 0x0F);
   rtcraw.min = ((rtcbcd.min & 0x7F) >> 4) * 10 + (rtcbcd.min & 0x0F);
   rtcraw.sec = ((rtcbcd.sec & 0x7F) >> 4) * 10 + (rtcbcd.sec & 0x0F);
-}
+}*/
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------BUTTONS FUNCTIONS------------------------------*/
