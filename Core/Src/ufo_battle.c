@@ -3,7 +3,7 @@
 #include "display_data.h"
 #include "scheduler.h"
 #include "common.h"
-
+#include <stdio.h>
 #define  JOY_DIRECT_RESET       if (joystick.down || joystick.up || joystick.left ||joystick.right) {\
                                   joystick.down = 0; joystick.up = 0; joystick.left = 0; joystick.right = 0;}
 #define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)\
@@ -60,7 +60,7 @@
 #define GAMER_HEALTH_MAX                24
 #define GAMER_ENERGY_MAX                24
 #define GAMERDEATH_ANIMATION_PERIOD     20
-#define GAME_PROGRESS_PERIOD_CALLS      20
+#define GAME_PROGRESS_PERIOD_CALLS      50
 
 #define PRD_EVILSTAR_CREATE_INITVAL     1400
 #define PRD_ENEMY_MOVE_INITVAL          24
@@ -191,8 +191,8 @@ void (*const gamestate_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_MAGAZIN] [EVENT_EXIT] = stateinit_exitmagazin,
 };
 
-uint8 gameslot1[20] = "-осярн-";
-uint8 gameslot2[20] = "-осярн-";
+uint8 gameslot1[25] = "-осярн-";
+uint8 gameslot2[25] = "-осярн-";
 
 void gamestatesprocess(void);
 
@@ -577,15 +577,10 @@ void gameprogress(void)
   static uint8 counter = 0;
   if(Gamer.health > 0)
   {
-    if(counter == GAME_PROGRESS_PERIOD_CALLS)
-    {
-      Game.level_progress++;
-      counter = 0;
-    }
+	PRD_EVILSTAR_CREATE = PRD_EVILSTAR_CREATE_INITVAL - 100 * (Game.level_progress / 15);
+	PRD_ENEMY_MOVE = PRD_ENEMY_MOVE_INITVAL - (Game.level_progress / 15);
 
-    if((Game.level_progress % 35 == 0) && counter == 0 && Game.level_progress){
-	  PRD_EVILSTAR_CREATE -= 100;
-	  PRD_ENEMY_MOVE -= 1;
+    if((Game.level_progress % 15 == 0) && counter == 0 && Game.level_progress){
 	  if(PRD_EVILSTAR_CREATE < 500) GameFlags.WinTheGame = 1;
 	  else {
 		MinMagaz.state = 1;
@@ -597,6 +592,11 @@ void gameprogress(void)
 
 
     counter++;
+    if(counter == GAME_PROGRESS_PERIOD_CALLS)
+    {
+      Game.level_progress++;
+      counter = 0;
+    }
   }
 }
 //--------------------------COMBINED SCHEDULER EVENTS---------------------------
@@ -678,19 +678,79 @@ void statehandler_gameinitnew(void)
     Gamer.ln = 16;
     Gamer.cl = 0;
     
-    BTN_HOLD_ON_DELAY = 50;
     Game.level_progress = 0;
     GameFlags.gameflagsreg = 0b00001101;
-    PRD_EVILSTAR_CREATE = PRD_EVILSTAR_CREATE_INITVAL;
-    PRD_ENEMY_MOVE = PRD_ENEMY_MOVE_INITVAL;
+
+    BTN_HOLD_ON_DELAY = 50;
     SchedGamerunEventsAdd();
     gameevent = EVENT_EXIT; 
   }
 }
 
+void statehandler_gamesave(void)
+{
+	uint8 temp;
+  if(coursorpos == COURS_POS_1){
+	EEPROM_writebyte(2, rtcraw.day);
+	temp = (EEPROM_readbyte(3) & 0x0F) + 1;
+	if(temp > 15) temp = 0;
+	EEPROM_writebyte(3, temp | (rtcraw.month << 4));
+	sprintf((char*)gameslot1, "януп.1 - %2.2d.%2.2d_%d", EEPROM_readbyte(2), EEPROM_readbyte(3) >> 4,  EEPROM_readbyte(3) & 0x0F);
+	EEPROM_writebyte(4, Gamer.health);
+	EEPROM_writebyte(5, Gamer.energymax);
+	EEPROM_writebyte(6, Gamer.gasmask_health);
+	EEPROM_writebyte(7, Gamer.bombs);
+	EEPROM_writebyte(8, Gamer.money);
+	EEPROM_writebyte(9, Game.level_progress);
+	EEPROM_writebyte(10, GameFlags.gameflagsreg);
+  }
+  if(coursorpos == COURS_POS_2){
+	EEPROM_writebyte(11, rtcraw.day);
+	temp = (EEPROM_readbyte(12) & 0x0F) + 1;
+	if(temp > 15) temp = 0;
+	EEPROM_writebyte(12, temp | (rtcraw.month << 4));
+	sprintf((char*)gameslot2, "януп.2 - %2.2d.%2.2d_%d", EEPROM_readbyte(11), EEPROM_readbyte(12) >> 4,  EEPROM_readbyte(12) & 0x0F);
+	EEPROM_writebyte(13, Gamer.health);
+	EEPROM_writebyte(14, Gamer.energymax);
+	EEPROM_writebyte(15, Gamer.gasmask_health);
+	EEPROM_writebyte(16, Gamer.bombs);
+	EEPROM_writebyte(17, Gamer.money);
+	EEPROM_writebyte(18, Game.level_progress);
+	EEPROM_writebyte(19, GameFlags.gameflagsreg);
+  }
+  LCD_bufupload_buferase();
+  LCD_printstr8x5((uint8*)"янупюмемн", 3, 36);
+  LCD_bufupload_buferase();
+  HAL_Delay(1000);
+  gameevent = EVENT_NONE;
+}
+
 void statehandler_gameload(void)
 {
-  statehandler_gameinitnew();
+  if(coursorpos == COURS_POS_1){
+    Gamer.health = EEPROM_readbyte(4);
+    Gamer.energymax = EEPROM_readbyte(5);
+    Gamer.energy = Gamer.energymax;
+    Gamer.gasmask_health = EEPROM_readbyte(6);
+    Gamer.bombs = EEPROM_readbyte(7);
+    Gamer.money = EEPROM_readbyte(8);
+    Game.level_progress = EEPROM_readbyte(9);
+    GameFlags.gameflagsreg = EEPROM_readbyte(10);
+  }
+  if(coursorpos == COURS_POS_2){
+    Gamer.health = EEPROM_readbyte(13);
+    Gamer.energymax = EEPROM_readbyte(14);
+    Gamer.energy = Gamer.energymax;
+    Gamer.gasmask_health = EEPROM_readbyte(15);
+    Gamer.bombs = EEPROM_readbyte(16);
+    Gamer.money = EEPROM_readbyte(17);
+    Game.level_progress = EEPROM_readbyte(18);
+    GameFlags.gameflagsreg = EEPROM_readbyte(19);
+  }
+  BTN_HOLD_ON_DELAY = 50;
+  SchedGamerunEventsAdd();
+  gamestate = STATE_RUNGAME;
+  gameevent = EVENT_NONE;
 }
 
 void statehandler_gamerun(void)
@@ -992,11 +1052,6 @@ void statehandler_menusave(void)
   if(gameevent == EVENT_SELPOS_3) coursorpos = COURS_POS_1; // coursor position when returning to the pause menu in "SAVE"
 }
 
-void statehandler_gamesave(void)
-{
-  gameevent = EVENT_NONE;
-}
-
 //------------------magazin buygoods functions----------------------
 void magaz_buybomb(void)
 {
@@ -1168,6 +1223,11 @@ void ufobattle(void)
   gameevent = EVENT_NONE;
   coursorpos = COURS_POS_1;
   
+  if(EEPROM_readbyte(2)) sprintf((char*)gameslot1, "януп.1 - %2.2d.%2.2d_%d", EEPROM_readbyte(2), EEPROM_readbyte(3) >> 4,  EEPROM_readbyte(3) & 0x0F);
+  else sprintf((char*)gameslot1, "-осярн-");
+  if(EEPROM_readbyte(11)) sprintf((char*)gameslot2, "януп.1 - %2.2d.%2.2d_%d", EEPROM_readbyte(11), EEPROM_readbyte(12) >> 4,  EEPROM_readbyte(12) & 0x0F);
+  else sprintf((char*)gameslot2, "-осярн-");
+
   while (CFlags.RunGameFl)
   {
     SchedEventProcess();

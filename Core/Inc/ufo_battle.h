@@ -21,7 +21,7 @@ typedef struct {
   int8 energymax;
   int8 gasmask_health;
   uint8 bombs;
-  uint16 money;
+  uint8 money;
   int8 ln;
   int8 cl;
 } tGamer;
@@ -69,8 +69,7 @@ typedef union{
       unsigned MagazEnter            :1;
       unsigned WinTheGame            :1;
       unsigned Flag2       :1;
-      unsigned Flag3       :1;
-      unsigned Flag4       :1;
+      unsigned GameLevel             :2;
     };
 } tGAMEPROCESFLAGS;
 extern tGamer Gamer;

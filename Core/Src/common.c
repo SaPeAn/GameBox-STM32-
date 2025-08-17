@@ -103,7 +103,8 @@ void commoninit(void)
   HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, SET);
   HAL_GPIO_WritePin(SOUND_OUT_GPIO_Port, SOUND_OUT_Pin, RESET);
   BrightPWMgen(220);
-  //brightPWM = EEPROM_readbyte(PWM_MEMADR);
+  brightPWM = EEPROM_readbyte(PWM_MEMADR);
+  if(brightPWM == 0) brightPWM = 220;
 }
 
 void initbuttons(void)
@@ -149,20 +150,22 @@ void batcheck(void)
 void ShutDownLB(void)
 {
   LCD_bufupload_buferase();
-  HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   LCD_printstr8x5((uint8*)"Низкий заряд батареи!", 1, 0);
   LCD_printstr8x5((uint8*)"Устройство", 3, 0);
   LCD_printstr8x5((uint8*)"сейчас выключится!", 5, 0);
   LCD_bufupload_buferase();
+  HAL_Delay(1000);
+  HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   while(1);
 }
 
 void ShutDown(void)
 {
   LCD_bufupload_buferase();
-  HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   LCD_printstr8x5((uint8*)"Выключение...", 3, 0);
   LCD_bufupload_buferase();
+  HAL_Delay(1000);
+  HAL_GPIO_WritePin(SHUTDOWN_GPIO_Port, SHUTDOWN_Pin, RESET);
   while(1);
 }
 
@@ -175,20 +178,20 @@ void decbright(void)
 {
   if(brightPWM <= 40) brightPWM = 70; 
   brightPWM -=30;
-  //EEPROM_writebyte(PWM_MEMADR, brightPWM);
+  EEPROM_writebyte(PWM_MEMADR, brightPWM);
 }
 
 void incbright(void)
 {
   if(brightPWM >= 250) brightPWM = 220; 
   brightPWM +=30;
-  //EEPROM_writebyte(PWM_MEMADR, brightPWM);
+  EEPROM_writebyte(PWM_MEMADR, brightPWM);
 }
 
 extern TIM_HandleTypeDef htim1;
 void BrightPWMgen(uint8 duty_cycle)
 {
-	uint16 dutyCycle = duty_cycle * 255;
+	uint16 dutyCycle = ((uint16)duty_cycle) * 255;
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, dutyCycle);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 }
@@ -234,9 +237,9 @@ void timer_to_cal (uint32 timer, tRTC* RTCdat)
 	uint32 time;
 
 	time = timer % SEC_A_DAY;
-	a = ((timer+43200)/(86400>>1)) + (2440587<<1) + 1;
+	a = ((timer + 43200) / (86400 >> 1)) + (2440587 <<1 ) + 1;
 	a >>= 1;
-	RTCdat->weekday = a%7;
+	RTCdat->weekday = a % 7;
 	a += 32044;
 	b = (4 * a + 3) / 146097;
 	a = a - (146097 * b) / 4;
@@ -382,29 +385,32 @@ void checkjoydir(void)
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------SAVE/LOAD FUNCTIONS------------------------------*/
-/*
-uint8 EEPROM_writebyte(uint8 adr, uint8 byte)
+
+void EEPROM_writebyte(uint8 addr, uint8 byte) // addr 0......19
 {
-  EEADR = adr;
-  EEDATA = byte;
-  EECON1bits.EEPGD = 0;
-  EECON1bits.CFGS = 0;
-  EECON1bits.WREN = 1;
-  INTCONbits.GIE = 0;
-  EECON2 = 0x55;
-  EECON2 = 0xAA;
-  EECON1bits.WR = 1;
-  INTCONbits.GIE = 1;
-  EECON1bits.WREN = 0;
-  return EECON1bits.WRERR;
+	uint32 temp = 0;
+	temp = HAL_RTCEx_BKUPRead(&hrtc, (1 + addr/2));
+	if(addr % 2) {
+		temp &= 0x000000FF;
+		temp |= ((uint32)byte) << 8;
+		HAL_RTCEx_BKUPWrite(&hrtc, (1 + addr/2), temp);
+	}
+	else {
+		temp &= 0x0000FF00;
+		temp |= (uint32)byte;
+		HAL_RTCEx_BKUPWrite(&hrtc, (1 + addr/2), temp);
+	}
 }
 
-uint8 EEPROM_readbyte(uint8 adr)
+uint8 EEPROM_readbyte(uint8 addr)   // addr 0......19
 {
-  EEADR = adr;
-  EECON1bits.EEPGD = 0;
-  EECON1bits.CFGS = 0;
-  EECON1bits.RD = 1;
-  return EEDATA;
+	uint32 temp = 0;
+	temp = HAL_RTCEx_BKUPRead(&hrtc, (1 + addr/2));
+	if(addr % 2) {
+		return (uint8)(temp >> 8);
+	}
+	else {
+		return (uint8)temp;
+	}
 }
-*/
+

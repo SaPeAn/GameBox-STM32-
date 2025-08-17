@@ -82,7 +82,7 @@ void RTCsenddata(tRTC*);
 
 
 #define    PWM_MEMADR    0
-uint8 EEPROM_writebyte(uint8, uint8);
+void EEPROM_writebyte(uint8, uint8);
 uint8 EEPROM_readbyte(uint8);
 /*----------------------------------------------------------------------------*/
 
