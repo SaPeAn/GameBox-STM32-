@@ -4559,7 +4559,7 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 .iplt           0x08006d14        0x0
  .iplt          0x08006d14        0x0 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
 
-.rodata         0x08006d14     0x1e28
+.rodata         0x08006d14     0x1e24
                 0x08006d14                        . = ALIGN (0x4)
  *(.rodata)
  .rodata        0x08006d14        0xd ./Core/Src/drv_LCD_ST7565_SPI.o
@@ -4616,130 +4616,129 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .rodata.statehandler_menusave.str1.1
                 0x080079a1       0x10 ./Core/Src/ufo_battle.o
  .rodata.statehandler_magazin.str1.1
-                0x080079b1       0x68 ./Core/Src/ufo_battle.o
+                0x080079b1       0x67 ./Core/Src/ufo_battle.o
  .rodata.ufobattle.str1.1
-                0x08007a19        0x8 ./Core/Src/ufo_battle.o
- *fill*         0x08007a21        0x3 
+                0x08007a18        0x8 ./Core/Src/ufo_battle.o
  .rodata.gamestate_transition_table
-                0x08007a24      0x168 ./Core/Src/ufo_battle.o
-                0x08007a24                gamestate_transition_table
+                0x08007a20      0x168 ./Core/Src/ufo_battle.o
+                0x08007a20                gamestate_transition_table
  .rodata.gamestory_string
-                0x08007b8c      0x708 ./Core/Src/ufo_battle.o
+                0x08007b88      0x708 ./Core/Src/ufo_battle.o
  .rodata.smallstar_sprite
-                0x08008294       0x48 ./Core/Src/ufo_battle.o
+                0x08008290       0x48 ./Core/Src/ufo_battle.o
  .rodata.smallstar
-                0x080082dc       0x30 ./Core/Src/ufo_battle.o
+                0x080082d8       0x30 ./Core/Src/ufo_battle.o
  .rodata.coin_sprite
-                0x0800830c        0xc ./Core/Src/ufo_battle.o
- .rodata.coin   0x08008318        0x8 ./Core/Src/ufo_battle.o
+                0x08008308        0xc ./Core/Src/ufo_battle.o
+ .rodata.coin   0x08008314        0x8 ./Core/Src/ufo_battle.o
  .rodata.bombshards_sprite
-                0x08008320       0x24 ./Core/Src/ufo_battle.o
+                0x0800831c       0x24 ./Core/Src/ufo_battle.o
  .rodata.BombShards
-                0x08008344      0x258 ./Core/Src/ufo_battle.o
+                0x08008340      0x258 ./Core/Src/ufo_battle.o
  .rodata.bomb_sprite
-                0x0800859c       0x30 ./Core/Src/ufo_battle.o
- .rodata.bomb   0x080085cc       0x20 ./Core/Src/ufo_battle.o
+                0x08008598       0x30 ./Core/Src/ufo_battle.o
+ .rodata.bomb   0x080085c8       0x20 ./Core/Src/ufo_battle.o
  .rodata.minimag_sprite
-                0x080085ec        0xc ./Core/Src/ufo_battle.o
+                0x080085e8        0xc ./Core/Src/ufo_battle.o
  .rodata.minimag
-                0x080085f8       0xa0 ./Core/Src/ufo_battle.o
+                0x080085f4       0xa0 ./Core/Src/ufo_battle.o
  .rodata.magazin_sprite
-                0x08008698        0xc ./Core/Src/ufo_battle.o
+                0x08008694        0xc ./Core/Src/ufo_battle.o
  .rodata.Magazin
-                0x080086a4      0x1c0 ./Core/Src/ufo_battle.o
+                0x080086a0      0x1c0 ./Core/Src/ufo_battle.o
  .rodata.distr_evilstar_sprite
-                0x08008864        0xc ./Core/Src/ufo_battle.o
+                0x08008860        0xc ./Core/Src/ufo_battle.o
  .rodata.distr_evilstar
-                0x08008870       0x38 ./Core/Src/ufo_battle.o
+                0x0800886c       0x38 ./Core/Src/ufo_battle.o
  .rodata.evilstar_sprite
-                0x080088a8        0xc ./Core/Src/ufo_battle.o
+                0x080088a4        0xc ./Core/Src/ufo_battle.o
  .rodata.evilstar
-                0x080088b4       0x38 ./Core/Src/ufo_battle.o
+                0x080088b0       0x38 ./Core/Src/ufo_battle.o
  .rodata.bullet_sprite
-                0x080088ec        0xc ./Core/Src/ufo_battle.o
+                0x080088e8        0xc ./Core/Src/ufo_battle.o
  .rodata.gamer_bullet
-                0x080088f8        0x4 ./Core/Src/ufo_battle.o
+                0x080088f4        0x4 ./Core/Src/ufo_battle.o
  .rodata.gamer_dead_1_sprite
-                0x080088fc        0xc ./Core/Src/ufo_battle.o
+                0x080088f8        0xc ./Core/Src/ufo_battle.o
  .rodata.gamer_dead_1
-                0x08008908       0x42 ./Core/Src/ufo_battle.o
- *fill*         0x0800894a        0x2 
+                0x08008904       0x42 ./Core/Src/ufo_battle.o
+ *fill*         0x08008946        0x2 
  .rodata.gamer_dead_0_sprite
-                0x0800894c        0xc ./Core/Src/ufo_battle.o
+                0x08008948        0xc ./Core/Src/ufo_battle.o
  .rodata.gamer_dead_0
-                0x08008958       0x42 ./Core/Src/ufo_battle.o
- *fill*         0x0800899a        0x2 
+                0x08008954       0x42 ./Core/Src/ufo_battle.o
+ *fill*         0x08008996        0x2 
  .rodata.gamer_gas_sprite
-                0x0800899c        0xc ./Core/Src/ufo_battle.o
+                0x08008998        0xc ./Core/Src/ufo_battle.o
  .rodata.gamer_gasmask
-                0x080089a8       0x42 ./Core/Src/ufo_battle.o
- *fill*         0x080089ea        0x2 
+                0x080089a4       0x42 ./Core/Src/ufo_battle.o
+ *fill*         0x080089e6        0x2 
  .rodata.gamer_sprite
-                0x080089ec        0xc ./Core/Src/ufo_battle.o
- .rodata.gamer  0x080089f8       0x42 ./Core/Src/ufo_battle.o
+                0x080089e8        0xc ./Core/Src/ufo_battle.o
+ .rodata.gamer  0x080089f4       0x42 ./Core/Src/ufo_battle.o
  .rodata.aPredivFactorTable.0
-                0x08008a3a        0x2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
+                0x08008a36        0x2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
  .rodata.aPLLMULFactorTable.1
-                0x08008a3c       0x10 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
+                0x08008a38       0x10 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
  .rodata.aPredivFactorTable.0
-                0x08008a4c        0x2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o
+                0x08008a48        0x2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o
  .rodata.aPLLMULFactorTable.1
-                0x08008a4e       0x10 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o
+                0x08008a4a       0x10 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o
  .rodata.srand.str1.1
-                0x08008a5e       0x6f C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-rand.o)
+                0x08008a5a       0x6f C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-rand.o)
  .rodata.__assert_func.str1.1
-                0x08008acd       0x3c C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-assert.o)
+                0x08008ac9       0x3c C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-assert.o)
                                  0x3d (size before relaxing)
  .rodata._svfprintf_r.str1.1
-                0x08008b09       0x11 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-svfprintf.o)
+                0x08008b05       0x11 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-svfprintf.o)
  .rodata._printf_i.str1.1
-                0x08008b1a       0x22 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-vfprintf_i.o)
+                0x08008b16       0x22 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-vfprintf_i.o)
  .rodata._vfprintf_r.str1.1
-                0x08008b3c       0x11 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-vfprintf.o)
-                0x08008b50                        . = ALIGN (0x4)
+                0x08008b38       0x11 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(libc_a-nano-vfprintf.o)
+                0x08008b4c                        . = ALIGN (0x4)
 
-.ARM.extab      0x08008b3c        0x0
-                0x08008b3c                        . = ALIGN (0x4)
+.ARM.extab      0x08008b38        0x0
+                0x08008b38                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08008b3c                        . = ALIGN (0x4)
+                0x08008b38                        . = ALIGN (0x4)
 
-.ARM            0x08008b3c        0x0
-                0x08008b3c                        . = ALIGN (0x4)
-                0x08008b3c                        __exidx_start = .
+.ARM            0x08008b38        0x0
+                0x08008b38                        . = ALIGN (0x4)
+                0x08008b38                        __exidx_start = .
  *(.ARM.exidx*)
-                0x08008b3c                        __exidx_end = .
-                0x08008b3c                        . = ALIGN (0x4)
+                0x08008b38                        __exidx_end = .
+                0x08008b38                        . = ALIGN (0x4)
 
-.preinit_array  0x08008b3c        0x0
-                0x08008b3c                        . = ALIGN (0x4)
-                0x08008b3c                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08008b38        0x0
+                0x08008b38                        . = ALIGN (0x4)
+                0x08008b38                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08008b3c                        PROVIDE (__preinit_array_end = .)
-                0x08008b3c                        . = ALIGN (0x4)
+                0x08008b38                        PROVIDE (__preinit_array_end = .)
+                0x08008b38                        . = ALIGN (0x4)
 
-.init_array     0x08008b3c        0x4
-                0x08008b3c                        . = ALIGN (0x4)
-                0x08008b3c                        PROVIDE (__init_array_start = .)
+.init_array     0x08008b38        0x4
+                0x08008b38                        . = ALIGN (0x4)
+                0x08008b38                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08008b3c        0x4 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
-                0x08008b40                        PROVIDE (__init_array_end = .)
-                0x08008b40                        . = ALIGN (0x4)
+ .init_array    0x08008b38        0x4 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
+                0x08008b3c                        PROVIDE (__init_array_end = .)
+                0x08008b3c                        . = ALIGN (0x4)
 
-.fini_array     0x08008b40        0x4
-                0x08008b40                        . = ALIGN (0x4)
+.fini_array     0x08008b3c        0x4
+                0x08008b3c                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08008b40        0x4 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
+ .fini_array    0x08008b3c        0x4 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x08008b44                        . = ALIGN (0x4)
-                0x08008b44                        _sidata = LOADADDR (.data)
+                0x08008b40                        . = ALIGN (0x4)
+                0x08008b40                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x08008b44        0x0
- .rel.iplt      0x08008b44        0x0 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
+.rel.dyn        0x08008b40        0x0
+ .rel.iplt      0x08008b40        0x0 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
 
-.data           0x20000000       0xc0 load address 0x08008b44
+.data           0x20000000       0xc0 load address 0x08008b40
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
@@ -4805,11 +4804,11 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x200000c0                        . = ALIGN (0x4)
                 0x200000c0                        _edata = .
 
-.igot.plt       0x200000c0        0x0 load address 0x08008c04
+.igot.plt       0x200000c0        0x0 load address 0x08008c00
  .igot.plt      0x200000c0        0x0 C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7-m/nofp/crtbegin.o
                 0x200000c0                        . = ALIGN (0x4)
 
-.bss            0x200000c0      0xae4 load address 0x08008c04
+.bss            0x200000c0      0xae4 load address 0x08008c00
                 0x200000c0                        _sbss = .
                 0x200000c0                        __bss_start__ = _sbss
  *(.bss)
@@ -4963,7 +4962,7 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x20000ba4                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x20000ba4      0x604 load address 0x08008c04
+                0x20000ba4      0x604 load address 0x08008c00
                 0x20000ba8                        . = ALIGN (0x8)
  *fill*         0x20000ba4        0x4 
                 [!provide]                        PROVIDE (end = .)

@@ -848,7 +848,7 @@ void stateinit_gamestop(void)
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   GAME_STORY_STRING_NUM = 0;
-  BTN_HOLD_ON_DELAY = 300;
+  BTN_HOLD_ON_DELAY = 500;
   Game.level_progress = 0;
   gamestate = STATE_MAINMENU;
   gameevent = EVENT_NONE;
@@ -1142,7 +1142,7 @@ void statehandler_magazin(void)
         LCD_printstr8x5((uint8*)price, 4, 100);
         break;
       case COURS_POS_3:
-        LCD_printstr8x5((uint8*)"<Бронешлем.\nСнижает\nурон.", 2, 0);
+        LCD_printstr8x5((uint8*)"Бронешлем.\nСнижает\nурон.", 2, 0);
         u16_to_str(price, GASMASK_MONEY_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
@@ -1188,8 +1188,6 @@ void system_events_period25ms(void)
 
 void system_events_period50ms(void)
 {
-  //JOY_DIRECT_RESET;
-  //IF_ANY_BTN_PRESS();
   check_btn_jstk();
 }
 

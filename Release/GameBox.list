@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00006c08  0800010c  0800010c  0000110c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00001e28  08006d14  08006d14  00007d14  2**2
+  2 .rodata       00001e24  08006d14  08006d14  00007d14  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08008b3c  08008b3c  0000a0c0  2**0
+  3 .ARM.extab    00000000  08008b38  08008b38  0000a0c0  2**0
                   CONTENTS
-  4 .ARM          00000000  08008b3c  08008b3c  0000a0c0  2**0
+  4 .ARM          00000000  08008b38  08008b38  0000a0c0  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08008b3c  08008b3c  0000a0c0  2**0
+  5 .preinit_array 00000000  08008b38  08008b38  0000a0c0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08008b3c  08008b3c  00009b3c  2**2
+  6 .init_array   00000004  08008b38  08008b38  00009b38  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  08008b40  08008b40  00009b40  2**2
+  7 .fini_array   00000004  08008b3c  08008b3c  00009b3c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         000000c0  20000000  08008b44  0000a000  2**2
+  8 .data         000000c0  20000000  08008b40  0000a000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000ae4  200000c0  08008c04  0000a0c0  2**2
+  9 .bss          00000ae4  200000c0  08008c00  0000a0c0  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000ba4  08008c04  0000aba4  2**0
+ 10 ._user_heap_stack 00000604  20000ba4  08008c00  0000aba4  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0000a0c0  2**0
                   CONTENTS, READONLY
@@ -5908,7 +5908,7 @@ void gamestatesprocess(void)
  80025fa:	bf00      	nop
  80025fc:	200008da 	.word	0x200008da
  8002600:	200008d8 	.word	0x200008d8
- 8002604:	08007a24 	.word	0x08007a24
+ 8002604:	08007a20 	.word	0x08007a20
 
 08002608 <createevilstar>:
   for(int i = 0; i < EVILSTAR_MAX; i++) {
@@ -7113,8 +7113,8 @@ void drawevilstar(void) {
  8002ea6:	f7ff fd57 	bl	8002958 <createcoin>
  8002eaa:	e7f2      	b.n	8002e92 <drawevilstar+0x42>
  8002eac:	20000969 	.word	0x20000969
- 8002eb0:	080088a8 	.word	0x080088a8
- 8002eb4:	08008864 	.word	0x08008864
+ 8002eb0:	080088a4 	.word	0x080088a4
+ 8002eb4:	08008860 	.word	0x08008860
 
 08002eb8 <drawcoin>:
 void drawcoin(void) {
@@ -7171,7 +7171,7 @@ void drawcoin(void) {
  8002f0c:	e7e2      	b.n	8002ed4 <drawcoin+0x1c>
  8002f0e:	bf00      	nop
  8002f10:	2000092d 	.word	0x2000092d
- 8002f14:	0800830c 	.word	0x0800830c
+ 8002f14:	08008308 	.word	0x08008308
 
 08002f18 <drawminmagaz>:
     if (MinMagaz.state) {
@@ -7187,7 +7187,7 @@ void drawcoin(void) {
  8002f2c:	4770      	bx	lr
  8002f2e:	bf00      	nop
  8002f30:	2000005c 	.word	0x2000005c
- 8002f34:	080085ec 	.word	0x080085ec
+ 8002f34:	080085e8 	.word	0x080085e8
 
 08002f38 <drawgamer>:
   if ((Gamer.health > 0)) {
@@ -7208,8 +7208,8 @@ void drawcoin(void) {
 }
  8002f5a:	4770      	bx	lr
  8002f5c:	20000a43 	.word	0x20000a43
- 8002f60:	0800899c 	.word	0x0800899c
- 8002f64:	080089ec 	.word	0x080089ec
+ 8002f60:	08008998 	.word	0x08008998
+ 8002f64:	080089e8 	.word	0x080089e8
 
 08002f68 <drawbullet>:
 void drawbullet(void) {
@@ -7235,7 +7235,7 @@ void drawbullet(void) {
  8002f8c:	bd70      	pop	{r4, r5, r6, pc}
  8002f8e:	bf00      	nop
  8002f90:	200009f8 	.word	0x200009f8
- 8002f94:	080088ec 	.word	0x080088ec
+ 8002f94:	080088e8 	.word	0x080088e8
 
 08002f98 <drawbomb>:
 void drawbomb(uint16 period) {
@@ -7367,13 +7367,13 @@ void drawbomb(uint16 period) {
  800309c:	e7e5      	b.n	800306a <drawbomb+0xd2>
  800309e:	bf00      	nop
  80030a0:	200009a8 	.word	0x200009a8
- 80030a4:	0800832c 	.word	0x0800832c
- 80030a8:	0800859c 	.word	0x0800859c
- 80030ac:	080085a8 	.word	0x080085a8
- 80030b0:	080085b4 	.word	0x080085b4
- 80030b4:	080085c0 	.word	0x080085c0
- 80030b8:	08008320 	.word	0x08008320
- 80030bc:	08008338 	.word	0x08008338
+ 80030a4:	08008328 	.word	0x08008328
+ 80030a8:	08008598 	.word	0x08008598
+ 80030ac:	080085a4 	.word	0x080085a4
+ 80030b0:	080085b0 	.word	0x080085b0
+ 80030b4:	080085bc 	.word	0x080085bc
+ 80030b8:	0800831c 	.word	0x0800831c
+ 80030bc:	08008334 	.word	0x08008334
 
 080030c0 <drawinfo>:
   LCD_printgamestatbar(&Gamer);
@@ -7510,7 +7510,7 @@ void drawbomb(uint16 period) {
 }
  8003196:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
  8003198:	200008f1 	.word	0x200008f1
- 800319c:	08008294 	.word	0x08008294
+ 800319c:	08008290 	.word	0x08008290
 
 080031a0 <system_events_period100ms>:
 {
@@ -7679,7 +7679,7 @@ void drawbomb(uint16 period) {
  80032a4:	200008da 	.word	0x200008da
  80032a8:	200008f0 	.word	0x200008f0
  80032ac:	200008d8 	.word	0x200008d8
- 80032b0:	08007b8c 	.word	0x08007b8c
+ 80032b0:	08007b88 	.word	0x08007b88
  80032b4:	080078ef 	.word	0x080078ef
  80032b8:	2000013c 	.word	0x2000013c
  80032bc:	20000124 	.word	0x20000124
@@ -8163,8 +8163,8 @@ void drawbomb(uint16 period) {
  8003680:	20000054 	.word	0x20000054
  8003684:	08002b49 	.word	0x08002b49
  8003688:	20000a43 	.word	0x20000a43
- 800368c:	0800894c 	.word	0x0800894c
- 8003690:	080088fc 	.word	0x080088fc
+ 800368c:	08008948 	.word	0x08008948
+ 8003690:	080088f8 	.word	0x080088f8
  8003694:	08007920 	.word	0x08007920
 
 08003698 <stateinit_exitmagazin>:
@@ -8207,7 +8207,7 @@ void drawbomb(uint16 period) {
  80036d4:	e7ef      	b.n	80036b6 <stateinit_exitmagazin+0x1e>
  80036d6:	bf00      	nop
  80036d8:	200008cc 	.word	0x200008cc
- 80036dc:	08008698 	.word	0x08008698
+ 80036dc:	08008694 	.word	0x08008694
  80036e0:	200008da 	.word	0x200008da
  80036e4:	200008d8 	.word	0x200008d8
 
@@ -8272,12 +8272,12 @@ void drawbomb(uint16 period) {
  800375e:	2a19      	cmp	r2, #25
  8003760:	5443      	strb	r3, [r0, r1]
  8003762:	d1f9      	bne.n	8003758 <stateinit_gamestop+0x2c>
-  BTN_HOLD_ON_DELAY = 300;
- 8003764:	f44f 7196 	mov.w	r1, #300	@ 0x12c
+  BTN_HOLD_ON_DELAY = 500;
+ 8003764:	f44f 71fa 	mov.w	r1, #500	@ 0x1f4
   GAME_STORY_STRING_NUM = 0;
  8003768:	4a09      	ldr	r2, [pc, #36]	@ (8003790 <stateinit_gamestop+0x64>)
  800376a:	7013      	strb	r3, [r2, #0]
-  BTN_HOLD_ON_DELAY = 300;
+  BTN_HOLD_ON_DELAY = 500;
  800376c:	4a09      	ldr	r2, [pc, #36]	@ (8003794 <stateinit_gamestop+0x68>)
  800376e:	6011      	str	r1, [r2, #0]
   Game.level_progress = 0;
@@ -9041,7 +9041,7 @@ void drawbomb(uint16 period) {
         LCD_printstr8x5((uint8*)price, 4, 100);
  8003d16:	2264      	movs	r2, #100	@ 0x64
  8003d18:	e00a      	b.n	8003d30 <statehandler_magazin+0x1a8>
-        LCD_printstr8x5((uint8*)"<Бронешлем.\nСнижает\nурон.", 2, 0);
+        LCD_printstr8x5((uint8*)"Бронешлем.\nСнижает\nурон.", 2, 0);
  8003d1a:	2200      	movs	r2, #0
  8003d1c:	2102      	movs	r1, #2
  8003d1e:	481f      	ldr	r0, [pc, #124]	@ (8003d9c <statehandler_magazin+0x214>)
@@ -9081,11 +9081,11 @@ void drawbomb(uint16 period) {
  8003d64:	2000010c 	.word	0x2000010c
  8003d68:	200000f4 	.word	0x200000f4
  8003d6c:	20000019 	.word	0x20000019
- 8003d70:	08007de4 	.word	0x08007de4
+ 8003d70:	08007de0 	.word	0x08007de0
  8003d74:	080078ef 	.word	0x080078ef
  8003d78:	20000a43 	.word	0x20000a43
  8003d7c:	20000018 	.word	0x20000018
- 8003d80:	08008698 	.word	0x08008698
+ 8003d80:	08008694 	.word	0x08008694
  8003d84:	080079b1 	.word	0x080079b1
  8003d88:	080079b7 	.word	0x080079b7
  8003d8c:	080079bf 	.word	0x080079bf
@@ -9093,8 +9093,8 @@ void drawbomb(uint16 period) {
  8003d94:	080079c4 	.word	0x080079c4
  8003d98:	080079d1 	.word	0x080079d1
  8003d9c:	080079eb 	.word	0x080079eb
- 8003da0:	08007a05 	.word	0x08007a05
- 8003da4:	08007a10 	.word	0x08007a10
+ 8003da0:	08007a04 	.word	0x08007a04
+ 8003da4:	08007a0f 	.word	0x08007a0f
 
 08003da8 <ufobattle>:
 /*******************************************************************************
@@ -9220,7 +9220,7 @@ void ufobattle(void)
  8003e98:	20000034 	.word	0x20000034
  8003e9c:	2000001b 	.word	0x2000001b
  8003ea0:	20000010 	.word	0x20000010
- 8003ea4:	08007a19 	.word	0x08007a19
+ 8003ea4:	08007a18 	.word	0x08007a18
 
 08003ea8 <Reset_Handler>:
   .weak Reset_Handler
@@ -9301,7 +9301,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8003ee0:	200000c0 	.word	0x200000c0
   ldr r2, =_sidata
- 8003ee4:	08008b44 	.word	0x08008b44
+ 8003ee4:	08008b40 	.word	0x08008b40
   ldr r2, =_sbss
  8003ee8:	200000c0 	.word	0x200000c0
   ldr r4, =_ebss
@@ -11491,9 +11491,9 @@ static void RCC_Delay(uint32_t mdelay)
  8004bec:	4770      	bx	lr
  8004bee:	bf00      	nop
  8004bf0:	40021000 	.word	0x40021000
- 8004bf4:	08008a3c 	.word	0x08008a3c
+ 8004bf4:	08008a38 	.word	0x08008a38
  8004bf8:	007a1200 	.word	0x007a1200
- 8004bfc:	08008a3a 	.word	0x08008a3a
+ 8004bfc:	08008a36 	.word	0x08008a36
  8004c00:	003d0900 	.word	0x003d0900
 
 08004c04 <HAL_RCC_ClockConfig>:
@@ -11974,8 +11974,8 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  8004ef2:	f44f 4000 	mov.w	r0, #32768	@ 0x8000
  8004ef6:	e7e9      	b.n	8004ecc <HAL_RCCEx_GetPeriphCLKFreq+0x7c>
  8004ef8:	40021000 	.word	0x40021000
- 8004efc:	08008a4e 	.word	0x08008a4e
- 8004f00:	08008a4c 	.word	0x08008a4c
+ 8004efc:	08008a4a 	.word	0x08008a4a
+ 8004f00:	08008a48 	.word	0x08008a48
  8004f04:	007a1200 	.word	0x007a1200
  8004f08:	003d0900 	.word	0x003d0900
 
@@ -13873,8 +13873,8 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  8005954:	615a      	str	r2, [r3, #20]
  8005956:	bd38      	pop	{r3, r4, r5, pc}
  8005958:	20000070 	.word	0x20000070
- 800595c:	08008a5e 	.word	0x08008a5e
- 8005960:	08008a75 	.word	0x08008a75
+ 800595c:	08008a5a 	.word	0x08008a5a
+ 8005960:	08008a71 	.word	0x08008a71
  8005964:	abcd330e 	.word	0xabcd330e
  8005968:	e66d1234 	.word	0xe66d1234
  800596c:	0005deec 	.word	0x0005deec
@@ -13918,8 +13918,8 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  80059c6:	f020 4000 	bic.w	r0, r0, #2147483648	@ 0x80000000
  80059ca:	bd10      	pop	{r4, pc}
  80059cc:	20000070 	.word	0x20000070
- 80059d0:	08008a5e 	.word	0x08008a5e
- 80059d4:	08008a75 	.word	0x08008a75
+ 80059d0:	08008a5a 	.word	0x08008a5a
+ 80059d4:	08008a71 	.word	0x08008a71
  80059d8:	abcd330e 	.word	0xabcd330e
  80059dc:	e66d1234 	.word	0xe66d1234
  80059e0:	0005deec 	.word	0x0005deec
@@ -14289,10 +14289,10 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  8005d12:	4798      	blx	r3
  8005d14:	3601      	adds	r6, #1
  8005d16:	e7f2      	b.n	8005cfe <__libc_init_array+0x1e>
- 8005d18:	08008b3c 	.word	0x08008b3c
- 8005d1c:	08008b3c 	.word	0x08008b3c
- 8005d20:	08008b3c 	.word	0x08008b3c
- 8005d24:	08008b40 	.word	0x08008b40
+ 8005d18:	08008b38 	.word	0x08008b38
+ 8005d1c:	08008b38 	.word	0x08008b38
+ 8005d20:	08008b38 	.word	0x08008b38
+ 8005d24:	08008b3c 	.word	0x08008b3c
 
 08005d28 <__retarget_lock_init_recursive>:
  8005d28:	4770      	bx	lr
@@ -14333,9 +14333,9 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  8005d68:	e7f4      	b.n	8005d54 <__assert_func+0x14>
  8005d6a:	bf00      	nop
  8005d6c:	20000070 	.word	0x20000070
- 8005d70:	08008b08 	.word	0x08008b08
- 8005d74:	08008ada 	.word	0x08008ada
- 8005d78:	08008acd 	.word	0x08008acd
+ 8005d70:	08008b04 	.word	0x08008b04
+ 8005d74:	08008ad6 	.word	0x08008ad6
+ 8005d78:	08008ac9 	.word	0x08008ac9
 
 08005d7c <_free_r>:
  8005d7c:	b538      	push	{r3, r4, r5, lr}
@@ -14841,9 +14841,9 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  800620c:	a904      	add	r1, sp, #16
  800620e:	f000 f87d 	bl	800630c <_printf_i>
  8006212:	e7ed      	b.n	80061f0 <_svfiprintf_r+0x1c0>
- 8006214:	08008b09 	.word	0x08008b09
- 8006218:	08008b0f 	.word	0x08008b0f
- 800621c:	08008b13 	.word	0x08008b13
+ 8006214:	08008b05 	.word	0x08008b05
+ 8006218:	08008b0b 	.word	0x08008b0b
+ 800621c:	08008b0f 	.word	0x08008b0f
  8006220:	00000000 	.word	0x00000000
  8006224:	08005f79 	.word	0x08005f79
 
@@ -15177,8 +15177,8 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  800653c:	2500      	movs	r5, #0
  800653e:	f104 0619 	add.w	r6, r4, #25
  8006542:	e7f5      	b.n	8006530 <_printf_i+0x224>
- 8006544:	08008b1a 	.word	0x08008b1a
- 8006548:	08008b2b 	.word	0x08008b2b
+ 8006544:	08008b16 	.word	0x08008b16
+ 8006548:	08008b27 	.word	0x08008b27
 
 0800654c <__sflush_r>:
  800654c:	f9b1 200c 	ldrsh.w	r2, [r1, #12]
@@ -15729,9 +15729,9 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  8006a18:	a904      	add	r1, sp, #16
  8006a1a:	f7ff fc77 	bl	800630c <_printf_i>
  8006a1e:	e7e4      	b.n	80069ea <_vfiprintf_r+0x1e6>
- 8006a20:	08008b09 	.word	0x08008b09
- 8006a24:	08008b0f 	.word	0x08008b0f
- 8006a28:	08008b13 	.word	0x08008b13
+ 8006a20:	08008b05 	.word	0x08008b05
+ 8006a24:	08008b0b 	.word	0x08008b0b
+ 8006a28:	08008b0f 	.word	0x08008b0f
  8006a2c:	00000000 	.word	0x00000000
  8006a30:	080067e1 	.word	0x080067e1
 
