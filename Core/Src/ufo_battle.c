@@ -747,6 +747,8 @@ void statehandler_gameload(void)
     Game.level_progress = EEPROM_readbyte(18);
     GameFlags.gameflagsreg = EEPROM_readbyte(19);
   }
+  Gamer.ln = 16;
+  Gamer.cl = 0;
   BTN_HOLD_ON_DELAY = 50;
   SchedGamerunEventsAdd();
   gamestate = STATE_RUNGAME;

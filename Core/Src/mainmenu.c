@@ -76,7 +76,7 @@ void setdatetime(void)
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(24, 8, 34); 
         if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year < 1970) rtcraw.year = 1970; HAL_Delay(200);}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 2038) rtcraw.year = 2038; HAL_Delay(200);}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 2099) rtcraw.year = 2099; HAL_Delay(200);}
       break;
       case 3: 
         LCD_erasestring(128, 1, 0); 
